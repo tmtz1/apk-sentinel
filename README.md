@@ -30,6 +30,7 @@ The intended workflow is bounded and deterministic: validate one APK, analyze it
 - [APK Sentinel architecture](assets/apk-sentinel-architecture.svg)
 - [Sanitized synthetic report](examples/apk-sentinel-sanitized-report.json)
 - [Validation notes](validation/apk-sentinel-validation.md)
+- [Real-world oxproxion 2.1.104 example](examples/real-world/oxproxion-2.1.104/)
 - [Project description](docs/apk-sentinel.md)
 
 ## Status and limits

@@ -1,0 +1,257 @@
+{
+  "components": {
+    "components": [
+      {
+        "exported_explicit": true,
+        "is_exported": true,
+        "kind": "activity",
+        "name": "io.github.stardomains3.oxproxion.AssistantActivity"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": true,
+        "kind": "activity",
+        "name": "io.github.stardomains3.oxproxion.AutosendActivity"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": true,
+        "kind": "activity",
+        "name": "io.github.stardomains3.oxproxion.ChooserActivity"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": true,
+        "kind": "activity",
+        "name": "io.github.stardomains3.oxproxion.MainActivity"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": true,
+        "kind": "activity",
+        "name": "io.github.stardomains3.oxproxion.PresetChooserActivity"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": true,
+        "kind": "activity",
+        "name": "io.github.stardomains3.oxproxion.SpellCheckActivity"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": true,
+        "kind": "activity",
+        "name": "io.github.stardomains3.oxproxion.Transactivity"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": false,
+        "kind": "provider",
+        "name": "androidx.core.content.FileProvider"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": false,
+        "kind": "provider",
+        "name": "androidx.startup.InitializationProvider"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": true,
+        "kind": "receiver",
+        "name": "androidx.profileinstaller.ProfileInstallReceiver"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": false,
+        "kind": "service",
+        "name": "androidx.room.MultiInstanceInvalidationService"
+      },
+      {
+        "exported_explicit": true,
+        "is_exported": false,
+        "kind": "service",
+        "name": "io.github.stardomains3.oxproxion.ForegroundService"
+      }
+    ]
+  },
+  "findings": {
+    "findings": [
+      {
+        "evidence": [
+          "java.lang.Class.forName"
+        ],
+        "rule_id": "suspicious.reflection",
+        "severity": "medium",
+        "title": "Reflection API referenced"
+      }
+    ]
+  },
+  "indicators": {
+    "indicators": [
+      {
+        "category": "reflection",
+        "evidence": [
+          "java.lang.Class.forName"
+        ]
+      }
+    ]
+  },
+  "package": {
+    "min_sdk": 31,
+    "package_name": "io.github.stardomains3.oxproxion",
+    "target_sdk": 37,
+    "version_code": 214,
+    "version_name": "2.1.104"
+  },
+  "permissions": {
+    "permissions": [
+      {
+        "is_dangerous": true,
+        "name": "android.permission.ACCESS_COARSE_LOCATION",
+        "protection_level": "dangerous|instant"
+      },
+      {
+        "is_dangerous": true,
+        "name": "android.permission.ACCESS_FINE_LOCATION",
+        "protection_level": "dangerous|instant"
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.ACCESS_LOCAL_NETWORK",
+        "protection_level": null
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.ACCESS_NOTIFICATION_POLICY",
+        "protection_level": "normal"
+      },
+      {
+        "is_dangerous": true,
+        "name": "android.permission.CAMERA",
+        "protection_level": "dangerous|instant"
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.FOREGROUND_SERVICE",
+        "protection_level": "normal|instant"
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.FOREGROUND_SERVICE_DATA_SYNC",
+        "protection_level": "normal|instant"
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.FOREGROUND_SERVICE_REMOTE_MESSAGING",
+        "protection_level": "normal|instant"
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.INTERNET",
+        "protection_level": "normal|instant"
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.MODIFY_AUDIO_SETTINGS",
+        "protection_level": "normal"
+      },
+      {
+        "is_dangerous": true,
+        "name": "android.permission.POST_NOTIFICATIONS",
+        "protection_level": "dangerous|instant"
+      },
+      {
+        "is_dangerous": true,
+        "name": "android.permission.RECORD_AUDIO",
+        "protection_level": "dangerous|instant"
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.USE_BIOMETRIC",
+        "protection_level": "normal"
+      },
+      {
+        "is_dangerous": false,
+        "name": "android.permission.USE_FINGERPRINT",
+        "protection_level": "normal"
+      },
+      {
+        "is_dangerous": false,
+        "name": "com.android.alarm.permission.SET_ALARM",
+        "protection_level": "normal"
+      },
+      {
+        "is_dangerous": false,
+        "name": "io.github.stardomains3.oxproxion.DYNAMIC_RECEIVER_NOT_EXPORTED_PERMISSION",
+        "protection_level": null
+      }
+    ]
+  },
+  "risk_score": {
+    "contributions": [
+      {
+        "points": 10,
+        "rule_id": "suspicious.reflection"
+      }
+    ],
+    "total": 10
+  },
+  "schema_version": "1.0",
+  "sha256": "699cf26b831f6c903e0bc860fc4bb408548c37be927e65615ff7407b4cd45f47",
+  "signing": {
+    "certificates": [
+      {
+        "hash_algorithm": "sha256",
+        "issuer": "Organizational Unit: Boo",
+        "not_valid_after": "2048-10-17T19:56:56Z",
+        "not_valid_before": "2023-10-24T19:56:56Z",
+        "serial_number": "1",
+        "sha1_fingerprint": "2e21012df43271c9aa146d9797224bcf73297994",
+        "sha256_fingerprint": "3f3af0c2b724c4918458c223508a61178e27d192caf942aa2d5825301bb1078e",
+        "signature_algorithm": "rsassa_pkcs1v15",
+        "subject": "Organizational Unit: Boo"
+      }
+    ],
+    "is_signed": true,
+    "schemes": [
+      "v2"
+    ]
+  },
+  "url_evidence": {
+    "urls": [
+      "http://www.openstreetmap.org/?lat=",
+      "https://api.search.brave.com/res/v1/local/place_search?q=",
+      "https://api.search.brave.com/res/v1/web/search?q=",
+      "https://f-droid.org/en/packages/io.github.stardomains3.oxproxion/",
+      "https://github.com/NousResearch/hermes-agent/blob/main/website/docs/user-guide/features/api-server.md",
+      "https://github.com/google/gson/blob/main/Troubleshooting.md#",
+      "https://github.com/stardomains3/oxproxion/",
+      "https://hermes-agent.nousresearch.com/",
+      "https://maps.apple.com/?q=",
+      "https://maps.google.com/?q=",
+      "https://openrouter.ai/",
+      "https://openrouter.ai/api/v1/audio/transcriptions",
+      "https://openrouter.ai/api/v1/chat/completions",
+      "https://openrouter.ai/api/v1/credits",
+      "https://openrouter.ai/api/v1/models",
+      "https://openrouter.ai/api/v1/models?output_modalities=image",
+      "https://openrouter.ai/api/v1/models?output_modalities=transcription",
+      "https://openrouter.ai/docs/guides/features/message-transforms",
+      "https://openrouter.ai/models",
+      "https://www.google.com/maps/search/?api=1&query="
+    ],
+    "domains": [
+      "api.search.brave.com",
+      "f-droid.org",
+      "github.com",
+      "hermes-agent.nousresearch.com",
+      "maps.apple.com",
+      "maps.google.com",
+      "openrouter.ai",
+      "www.buymeacoffee.com",
+      "www.google.com",
+      "www.openstreetmap.org"
+    ]
+  }
+}
