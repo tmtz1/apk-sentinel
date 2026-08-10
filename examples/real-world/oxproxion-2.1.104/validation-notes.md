@@ -9,18 +9,28 @@ F-Droid version 2.1.104 / version code 214
 SHA-256: 699cf26b831f6c903e0bc860fc4bb408548c37be927e65615ff7407b4cd45f47
 ```
 
-Static analysis was run twice with the same analyzer and APK bytes. The canonical report hashes were identical:
+The analyzer was run twice against the same APK bytes before the URL extractor fix; the canonical report was deterministic. After the fix, the regenerated canonical analyzer report was:
 
 ```text
-374f2643e1a83ac9a65f62cb492cc91c055d17b99908fbe64696cf527348635f
-374f2643e1a83ac9a65f62cb492cc91c055d17b99908fbe64696cf527348635f
+Raw analyzer report SHA-256: ae50651216b6e5072292d12395a669973f67e6a5c5dfb78e8ed299fcdbf526c8
 ```
 
-The APK Sentinel test suite also passed:
+The focused URL regression tests and the full APK Sentinel suite passed:
 
 ```text
-393 passed in 4.87s
+2 focused regression tests passed
+395 passed in 4.88s
 ```
+
+## Fix covered by this example
+
+The extractor now rejects malformed HTTP(S) candidates with invalid hosts or ports and rejects unmistakable Markdown link concatenations such as:
+
+```text
+https://example/releases](https://example/releases
+```
+
+It continues to retain syntactically valid namespace URLs as static evidence rather than guessing that unusual means malicious. The public report applies a separate bounded publication filter to omit library/documentation namespaces.
 
 ## Provenance verification
 
@@ -30,6 +40,6 @@ The APK Sentinel test suite also passed:
 - The detached F-Droid PGP signature was downloaded, but local GnuPG could not complete cryptographic verification because the corresponding F-Droid public key was not present in the local keyring. This is recorded rather than overstated.
 - F-Droid's reproducibility page currently displays successful verification through version `2.1.97`; verification for `2.1.104` was not displayed at the time of review.
 
-## Known limitation
+## Safety statement
 
-The current URL extractor is intentionally bounded but noisy for applications containing HTML, documentation, and library resources. The raw local report contained malformed URL-like strings. Those were retained privately for engineering follow-up and excluded from the public report; no analyzer code was changed for this showcase.
+The APK was analyzed statically. It was not installed, executed, side-loaded, connected to a device, or uploaded to an external malware-analysis service.

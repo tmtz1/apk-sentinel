@@ -31,7 +31,7 @@ The report identified:
 
 This is **not a malware verdict**. The permissions and components require review, but they are not by themselves evidence of malicious behavior. Reflection is common in legitimate Android applications and can produce false positives.
 
-The URL evidence was sanitized before publication because the current extractor also surfaces URL-like strings from embedded documentation, HTML, and library resources. The published report retains only a bounded set of recognizable application-related domains.
+The URL evidence was generated after the extractor validation fix. The public presentation applies a bounded publication filter to omit library/documentation namespaces and retain recognizable application-related domains. The analyzer itself still records unusual but syntactically valid namespace URLs as static evidence; they must not be treated as network IOCs without further classification.
 
 ## Safety statement
 
