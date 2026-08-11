@@ -35,7 +35,11 @@ The intended workflow is bounded and deterministic: validate one APK, analyze it
 
 ## Status and limits
 
-This is not a public paid endpoint and does not claim that static analysis can prove an APK safe or malicious. Production implementation, private fixtures, deployment evidence, and payment integration remain restricted.
+The app-only static-analysis lane has completed its current internal acceptance review. A nine-sample F-Droid edge-case corpus was exercised in isolated, static-only runs; the initially rejected large/complex samples were rerun after bounded-input and partial-evidence handling were improved. Successful reports were checked for repeatability and cleanup.
+
+The analyzer now uses a 125 MiB input ceiling and reports when bounded URL or indicator scans are truncated rather than silently presenting incomplete evidence. These limits are safety bounds, not a promise of complete APK coverage.
+
+This is not a public paid endpoint and does not claim that static analysis can prove an APK safe or malicious. Payment integration, public deployment, private fixtures, customer data, and dynamic analysis remain deferred or restricted.
 
 The public report uses a synthetic test APK. No customer samples, private APKs, credentials, or proprietary detection logic are included.
 

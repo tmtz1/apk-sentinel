@@ -11,8 +11,10 @@ The private APK Sentinel implementation was tested with its local test suite:
 Observed result:
 
 ```text
-393 passed in 4.89s
+426 passed
 ```
+
+The app-only acceptance lane has since been exercised against a nine-sample F-Droid edge-case corpus in isolated static-only runs. Large-input and bounded-scan handling were revised, then the previously rejected cases were rerun with deterministic report and cleanup checks.
 
 A signed synthetic APK fixture was built locally from committed test source. It was analyzed statically and serialized using the canonical report serializer. The published example was then parsed back through the `AnalysisReport` schema before writing.
 
