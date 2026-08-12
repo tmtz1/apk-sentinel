@@ -1,6 +1,6 @@
 # APK Sentinel — Public Technical Showcase
 
-**Willow & Birdie Innovations LLC · Tmtz**
+**Willow & Birdie Innovations · Tmtz**
 
 APK Sentinel is a private, in-development project for evidence-backed static analysis of Android APKs.
 
@@ -31,6 +31,7 @@ The intended workflow is bounded and deterministic: validate one APK, analyze it
 - [Sanitized synthetic report](examples/apk-sentinel-sanitized-report.json)
 - [Validation notes](validation/apk-sentinel-validation.md)
 - [Real-world oxproxion 2.1.104 example](examples/real-world/oxproxion-2.1.104/)
+- [Real-world hard cases and fixes](docs/real-world-hard-cases.md)
 - [Project description](docs/apk-sentinel.md)
 
 ## Status and limits
@@ -46,5 +47,5 @@ The public report uses a synthetic test APK. No customer samples, private APKs, 
 ## Links
 
 - [Willow & Birdie Innovations](https://willowbirdie.com)
-- [Tmtz on GitHub](https://github.com/tmtz1)
+- [Project profile](https://github.com/tmtz1)
 - [Contact](mailto:admin@willowbirdie.com)
