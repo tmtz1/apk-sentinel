@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://tmtz1.github.io/apk-sentinel-public-showcase/sitemap.xml
+Sitemap: https://apk-sentinel.willowbirdie.com/sitemap.xml

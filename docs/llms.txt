@@ -2,7 +2,7 @@
 
 > Agent-native static APK triage producing deterministic, evidence-backed JSON.
 
-Canonical site: https://tmtz1.github.io/apk-sentinel-public-showcase/
+Canonical site: https://apk-sentinel.willowbirdie.com/
 
 ## Product
 
@@ -22,9 +22,9 @@ Static analysis only. APKs are not installed, executed, or side-loaded. Extracte
 
 ## Resources
 
-- Product brief: https://tmtz1.github.io/apk-sentinel-public-showcase/agent-product.md
-- API contract: https://tmtz1.github.io/apk-sentinel-public-showcase/agent-api-contract.md
-- Synthetic report: https://tmtz1.github.io/apk-sentinel-public-showcase/examples/apk-sentinel-sanitized-report.json
+- Product brief: https://apk-sentinel.willowbirdie.com/agent-product.md
+- API contract: https://apk-sentinel.willowbirdie.com/agent-api-contract.md
+- Synthetic report: https://apk-sentinel.willowbirdie.com/examples/apk-sentinel-sanitized-report.json
 - Source and evidence: https://github.com/tmtz1/apk-sentinel-public-showcase
 
 Deployment, payment, pricing, retention, and intake availability are deployment-specific.
