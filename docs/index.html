@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>APK Sentinel — Agent-native static APK triage</title>
+  <meta name="description" content="Deterministic, evidence-backed static APK triage for security and agent workflows.">
+  <link rel="canonical" href="https://tmtz1.github.io/apk-sentinel-public-showcase/">
+  <style>
+    :root { color-scheme: dark; --bg:#101419; --panel:#171d24; --text:#e8edf2; --muted:#aab6c2; --accent:#77d6a3; --line:#2b3642; }
+    * { box-sizing:border-box; } body { margin:0; background:var(--bg); color:var(--text); font:16px/1.6 system-ui,-apple-system,Segoe UI,sans-serif; }
+    main { max-width:960px; margin:0 auto; padding:64px 24px 80px; } a { color:var(--accent); } .eyebrow { color:var(--accent); letter-spacing:.12em; text-transform:uppercase; font-size:.78rem; font-weight:700; }
+    h1 { max-width:760px; font-size:clamp(2.4rem,6vw,4.8rem); line-height:1.04; margin:14px 0 24px; } h2 { margin-top:48px; } .lead { max-width:720px; color:var(--muted); font-size:1.2rem; }
+    .grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(220px,1fr)); gap:16px; margin-top:32px; } .card { background:var(--panel); border:1px solid var(--line); border-radius:12px; padding:20px; }
+    .card h3 { margin-top:0; } code { color:#d8f5e4; } pre { overflow:auto; background:#0b0f13; border:1px solid var(--line); border-radius:10px; padding:18px; }
+    .links { display:flex; flex-wrap:wrap; gap:16px; margin-top:28px; } .links a { border:1px solid var(--line); border-radius:8px; padding:10px 14px; text-decoration:none; }
+    footer { margin-top:64px; color:var(--muted); border-top:1px solid var(--line); padding-top:18px; font-size:.9rem; }
+  </style>
+</head>
+<body>
+<main>
+  <div class="eyebrow">APK Sentinel · agent product</div>
+  <h1>Static APK triage an agent can actually use.</h1>
+  <p class="lead">Submit one Android APK and receive deterministic, evidence-backed JSON for security, fraud, app-review, and trust-and-safety workflows.</p>
+  <div class="links">
+    <a href="agent-product.md">Agent product brief</a>
+    <a href="agent-api-contract.md">API contract</a>
+    <a href="../examples/apk-sentinel-sanitized-report.json">Synthetic report</a>
+    <a href="https://github.com/tmtz1/apk-sentinel-public-showcase">Source and evidence</a>
+  </div>
+  <section class="grid">
+    <article class="card"><h3>Structured evidence</h3><p>Package identity, SDK metadata, permissions, exported components, signing metadata, bounded URLs, indicators, findings, and a rule-based risk score.</p></article>
+    <article class="card"><h3>Static-only boundary</h3><p>APK files are not installed, executed, or side-loaded. Extracted URLs are inert evidence and are not fetched.</p></article>
+    <article class="card"><h3>Built for machines</h3><p>JSON-first output, schema versioning, explicit limits, sanitized errors, and no caller-supplied analyzer flags.</p></article>
+  </section>
+  <h2>Primary operation</h2>
+  <pre><code>POST /v1/apk/triage
+Content-Type: multipart/form-data
+
+file=&lt;one APK&gt;</code></pre>
+  <p>Deployment URL, authentication or payment mechanism, pricing, retention, and availability are deployment-specific. This page documents the product contract; it does not expose an intake endpoint.</p>
+  <h2>What it is not</h2>
+  <p>APK Sentinel is triage, not proof that an APK is benign or malicious. It does not replace reverse engineering, threat intelligence, dynamic analysis, or incident response.</p>
+  <footer>Public technical showcase · synthetic and sanitized evidence only · <a href="https://github.com/tmtz1/apk-sentinel-public-showcase">GitHub repository</a></footer>
+</main>
+</body>
+</html>

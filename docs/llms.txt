@@ -1,0 +1,30 @@
+# APK Sentinel
+
+> Agent-native static APK triage producing deterministic, evidence-backed JSON.
+
+Canonical site: https://tmtz1.github.io/apk-sentinel-public-showcase/
+
+## Product
+
+Submit one Android APK and receive structured triage evidence for security, fraud, app-review, trust-and-safety, and platform workflows.
+
+## Primary operation
+
+POST /v1/apk/triage with one APK in multipart field `file`.
+
+## Report
+
+The report contains SHA-256 identity, package and SDK metadata, permissions, exported components, signing metadata, bounded URL/domain evidence, suspicious static indicators, evidence-backed findings, and a deterministic rule-based risk score.
+
+## Safety
+
+Static analysis only. APKs are not installed, executed, or side-loaded. Extracted URLs are inert report data and are not fetched. Resource, time, output, and concurrency limits are explicit.
+
+## Resources
+
+- Product brief: https://tmtz1.github.io/apk-sentinel-public-showcase/agent-product.md
+- API contract: https://tmtz1.github.io/apk-sentinel-public-showcase/agent-api-contract.md
+- Synthetic report: https://tmtz1.github.io/apk-sentinel-public-showcase/examples/apk-sentinel-sanitized-report.json
+- Source and evidence: https://github.com/tmtz1/apk-sentinel-public-showcase
+
+Deployment, payment, pricing, retention, and intake availability are deployment-specific.

@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://tmtz1.github.io/apk-sentinel-public-showcase/sitemap.xml
