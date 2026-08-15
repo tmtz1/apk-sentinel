@@ -28,6 +28,8 @@ Static analysis only. APKs are not installed, executed, or side-loaded. Extracte
 - About: https://apk-sentinel.willowbirdie.com/about.md
 - Availability and pricing: https://apk-sentinel.willowbirdie.com/pricing.md
 - Contact: https://apk-sentinel.willowbirdie.com/contact.md
+- Security: https://apk-sentinel.willowbirdie.com/security/
+- Vulnerability reporting: https://apk-sentinel.willowbirdie.com/.well-known/security.txt
 - Synthetic report: https://apk-sentinel.willowbirdie.com/examples/apk-sentinel-sanitized-report.json
 - Source and evidence: https://github.com/tmtz1/apk-sentinel-public-showcase
 

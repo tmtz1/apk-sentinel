@@ -2,3 +2,5 @@ User-agent: *
 Allow: /
 
 Sitemap: https://apk-sentinel.willowbirdie.com/sitemap.xml
+
+# Public security policy

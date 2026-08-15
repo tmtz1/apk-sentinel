@@ -1,0 +1,4 @@
+Contact: mailto:admin@willowbirdie.com
+Canonical: https://apk-sentinel.willowbirdie.com/.well-known/security.txt
+Policy: https://apk-sentinel.willowbirdie.com/security/
+Expires: 2027-08-15T00:00:00.000Z

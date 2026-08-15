@@ -7,5 +7,10 @@
   <url><loc>https://apk-sentinel.willowbirdie.com/about.md</loc></url>
   <url><loc>https://apk-sentinel.willowbirdie.com/pricing.md</loc></url>
   <url><loc>https://apk-sentinel.willowbirdie.com/contact.md</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/about/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/contact/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/pricing/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/security/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/.well-known/security.txt</loc></url>
   <url><loc>https://apk-sentinel.willowbirdie.com/llms.txt</loc></url>
 </urlset>

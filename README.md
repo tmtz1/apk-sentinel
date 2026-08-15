@@ -37,6 +37,7 @@ The intended workflow is bounded and deterministic: validate one APK, analyze it
 - [Agent-facing API contract](docs/agent-api-contract.md)
 - [OpenAPI description](docs/openapi.json)
 - [Live agent-facing site](https://apk-sentinel.willowbirdie.com/)
+- [Security boundary](docs/security.md)
 - [Machine-readable product summary](llms.txt)
 
 ## Status and limits
