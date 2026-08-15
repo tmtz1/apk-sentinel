@@ -1,0 +1,75 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "APK Sentinel API",
+    "version": "1.0.0",
+    "description": "Agent-oriented static APK triage. The API accepts one Android APK and returns deterministic, evidence-backed JSON. Deployment URL, authentication or payment, pricing, retention, and availability are deployment-specific."
+  },
+  "servers": [
+    {
+      "url": "https://api.example.invalid",
+      "description": "Placeholder only; no live endpoint is implied by this public showcase."
+    }
+  ],
+  "paths": {
+    "/v1/apk/triage": {
+      "post": {
+        "summary": "Analyze one APK statically",
+        "operationId": "triageApk",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "multipart/form-data": {
+              "schema": {
+                "type": "object",
+                "required": ["file"],
+                "properties": {
+                  "file": {"type": "string", "format": "binary", "description": "One Android APK; maximum 125 MiB."}
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {"description": "Versioned deterministic analysis report.", "content": {"application/json": {"schema": {"$ref": "#/components/schemas/AnalysisReport"}}}},
+          "400": {"description": "Malformed or empty upload."},
+          "413": {"description": "Upload exceeds the configured limit."},
+          "422": {"description": "Uploaded file is not a valid APK."},
+          "500": {"description": "Analysis failure."},
+          "503": {"description": "Service unavailable."}
+        }
+      }
+    },
+    "/v1/apk/preflight": {
+      "post": {
+        "summary": "Validate an APK upload boundary",
+        "operationId": "preflightApk",
+        "requestBody": {"required": true, "content": {"multipart/form-data": {"schema": {"$ref": "#/components/schemas/ApkUpload"}}}},
+        "responses": {"200": {"description": "Deployment-specific validation or quote result."}, "400": {"description": "Malformed upload."}, "413": {"description": "Upload exceeds the configured limit."}}
+      }
+    },
+    "/healthz": {"get": {"summary": "Process health", "operationId": "healthz", "responses": {"200": {"description": "Process is responding."}}}},
+    "/readyz": {"get": {"summary": "Dependency readiness", "operationId": "readyz", "responses": {"200": {"description": "Ready."}, "503": {"description": "Not ready."}}}}
+  },
+  "components": {
+    "schemas": {
+      "ApkUpload": {"type": "object", "required": ["file"], "properties": {"file": {"type": "string", "format": "binary"}}},
+      "AnalysisReport": {
+        "type": "object",
+        "required": ["schema_version", "sha256", "package", "permissions", "components", "signing", "findings", "risk_score"],
+        "properties": {
+          "schema_version": {"type": "string"},
+          "sha256": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+          "package": {"type": "object"},
+          "permissions": {"type": "object"},
+          "components": {"type": "object"},
+          "signing": {"type": "object"},
+          "url_evidence": {"type": "object"},
+          "indicators": {"type": "object"},
+          "findings": {"type": "object"},
+          "risk_score": {"type": "object"}
+        }
+      }
+    }
+  }
+}

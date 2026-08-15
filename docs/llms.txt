@@ -24,6 +24,10 @@ Static analysis only. APKs are not installed, executed, or side-loaded. Extracte
 
 - Product brief: https://apk-sentinel.willowbirdie.com/agent-product.md
 - API contract: https://apk-sentinel.willowbirdie.com/agent-api-contract.md
+- OpenAPI: https://apk-sentinel.willowbirdie.com/openapi.json
+- About: https://apk-sentinel.willowbirdie.com/about.md
+- Availability and pricing: https://apk-sentinel.willowbirdie.com/pricing.md
+- Contact: https://apk-sentinel.willowbirdie.com/contact.md
 - Synthetic report: https://apk-sentinel.willowbirdie.com/examples/apk-sentinel-sanitized-report.json
 - Source and evidence: https://github.com/tmtz1/apk-sentinel-public-showcase
 
