@@ -1,0 +1,45 @@
+name: Public evidence checks
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  validate-public-contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.x'
+      - name: Validate JSON and canonical status
+        run: |
+          python - <<'PY'
+          import json
+          from pathlib import Path
+
+          status = json.loads(Path('product-status.json').read_text())
+          assert status['status'] == 'limited-beta'
+          assert status['endpoint_publicly_callable'] is True
+          assert status['endpoint'] == 'https://api.willowbirdie.com/v1/apk/triage'
+          assert status['browser_upload'] is False
+          assert status['general_customer_intake'] is False
+          assert status['payment']['enabled'] is True
+          assert status['payment']['network'] == 'Base Sepolia'
+
+          openapi = json.loads(Path('docs/openapi.json').read_text())
+          assert openapi['servers'][0]['url'] == status['endpoint'].rsplit('/v1/', 1)[0]
+          assert ('no live' + ' endpoint') not in openapi['servers'][0]['description'].lower()
+
+          placeholder = 'api.' + 'example.invalid'
+          for path in ['llms.txt', 'docs/llms.txt']:
+              text = Path(path).read_text()
+              assert 'limited-beta' in text or 'Limited beta' in text
+              assert status['endpoint'] in text
+              assert placeholder not in text
+          PY
+      - name: Validate representative JSON artifacts
+        run: |
+          python -m json.tool examples/apk-sentinel-sanitized-report.json >/dev/null
+          python -m json.tool docs/examples/apk-sentinel-sanitized-report.json >/dev/null
+          python -m json.tool product-status.json >/dev/null
