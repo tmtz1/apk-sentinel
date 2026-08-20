@@ -3,12 +3,12 @@
   "info": {
     "title": "APK Sentinel API",
     "version": "1.0.0",
-    "description": "Agent-oriented static APK triage. The API accepts one Android APK and returns deterministic, evidence-backed JSON. Deployment URL, authentication or payment, pricing, retention, and availability are deployment-specific."
+    "description": "Deterministic, automation-friendly static APK triage for software agents, automated security workflows, and human analysts. This limited-beta deployment accepts one Android APK and returns evidence-backed JSON. Payment uses x402 on Base Sepolia; general customer intake and support are not enabled."
   },
   "servers": [
     {
-      "url": "https://api.example.invalid",
-      "description": "Placeholder only; no live endpoint is implied by this public showcase."
+      "url": "https://api.willowbirdie.com",
+      "description": "Limited-beta endpoint for bounded testing. Not a browser upload portal; general customer intake and support are not enabled."
     }
   ],
   "paths": {

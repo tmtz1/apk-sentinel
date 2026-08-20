@@ -1,12 +1,12 @@
-# APK Sentinel — Public Technical Showcase
+# APK Sentinel
 
-**Willow & Birdie Innovations · Tmtz**
+**Willow & Birdie Innovations · Public technical showcase**
 
 APK Sentinel is a deterministic, automation-friendly API for evidence-backed static analysis of Android APKs. This repository contains the sanitized product documentation and evidence package.
 
 The intended workflow is bounded and deterministic: validate one APK, analyze it statically inside a restricted job boundary, return a versioned JSON report, and clean up temporary artifacts.
 
-**Status:** Limited beta. **Endpoint:** `https://api.willowbirdie.com/v1/apk/triage`. **Payment:** x402 on the Base Sepolia testnet. **Availability:** the endpoint is available for bounded testing, while customer intake and support remain deployment-specific. This is API access, not a browser upload portal.
+**Status:** Limited beta. The documented endpoint is callable for bounded testing through x402 on Base Sepolia. This is API access, not a browser upload portal; general customer intake and support are not enabled. [Canonical status](product-status.json).
 
 ## Validation first
 

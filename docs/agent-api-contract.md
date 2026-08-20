@@ -1,6 +1,6 @@
 # APK Sentinel — Agent-Facing Contract
 
-This is the public product contract. The base URL, authentication/payment mechanism, and availability are deployment-specific.
+This is the public product contract for the current limited-beta deployment. The endpoint is callable for bounded testing through x402 on Base Sepolia. This is API access, not a browser upload portal; general customer intake and support are not enabled. The canonical machine-readable status is [product-status.json](../product-status.json).
 
 ## Primary operation
 

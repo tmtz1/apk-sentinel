@@ -1,6 +1,13 @@
 # APK Sentinel
 
-> Agent-oriented static APK triage producing deterministic, evidence-backed JSON.
+> Deterministic, automation-friendly static APK triage for software agents, automated security workflows, and human analysts.
+
+## Availability
+
+Limited beta. The documented endpoint is callable for bounded testing through x402 on Base Sepolia. This is API access, not a browser upload portal. General customer intake and support are not enabled.
+
+Canonical status: https://github.com/tmtz1/apk-sentinel/blob/main/product-status.json
+Endpoint: https://api.willowbirdie.com/v1/apk/triage
 
 ## Product
 
