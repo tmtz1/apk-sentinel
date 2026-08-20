@@ -31,6 +31,6 @@ Static analysis only. APKs are not installed, executed, or side-loaded. Extracte
 - Security: https://apk-sentinel.willowbirdie.com/security/
 - Vulnerability reporting: https://apk-sentinel.willowbirdie.com/.well-known/security.txt
 - Synthetic report: https://apk-sentinel.willowbirdie.com/examples/apk-sentinel-sanitized-report.json
-- Source and evidence: https://github.com/tmtz1/apk-sentinel-public-showcase
+- Source and evidence: https://github.com/tmtz1/apk-sentinel
 
 Deployment, payment, pricing, retention, and intake availability are deployment-specific.

@@ -28,10 +28,10 @@ APK Sentinel accepts one Android APK and produces a structured triage report for
 
 ## Public references
 
-- Product brief: https://github.com/tmtz1/apk-sentinel-public-showcase/blob/main/docs/agent-product.md
-- API contract: https://github.com/tmtz1/apk-sentinel-public-showcase/blob/main/docs/agent-api-contract.md
-- Synthetic report: https://github.com/tmtz1/apk-sentinel-public-showcase/blob/main/examples/apk-sentinel-sanitized-report.json
-- Validation notes: https://github.com/tmtz1/apk-sentinel-public-showcase/blob/main/validation/apk-sentinel-validation.md
+- Product brief: https://github.com/tmtz1/apk-sentinel/blob/main/docs/agent-product.md
+- API contract: https://github.com/tmtz1/apk-sentinel/blob/main/docs/agent-api-contract.md
+- Synthetic report: https://github.com/tmtz1/apk-sentinel/blob/main/examples/apk-sentinel-sanitized-report.json
+- Validation notes: https://github.com/tmtz1/apk-sentinel/blob/main/validation/apk-sentinel-validation.md
 
 ## Availability
 

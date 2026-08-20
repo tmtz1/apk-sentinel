@@ -1,6 +1,6 @@
 # APK Sentinel availability and pricing
 
-APK Sentinel is being packaged as an agent-oriented static APK triage service. Public endpoint availability, x402 payment activation, network, price, retention, and support terms are deployment-specific and are not implied by this showcase repository.
+APK Sentinel is being packaged as a deterministic, automation-friendly static APK triage API. It is in a limited beta with a testnet payment path; endpoint availability, pricing, retention, and support terms remain deployment-specific.
 
 For a pilot or integration discussion, contact [admin@willowbirdie.com](mailto:admin@willowbirdie.com?subject=APK%20Sentinel%20pricing).
 

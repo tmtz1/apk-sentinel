@@ -25,4 +25,4 @@ This page is a product security boundary, not a guarantee that every deployment 
 - [Agent-facing API contract](agent-api-contract.md)
 - [OpenAPI description](openapi.json)
 - [Synthetic report](examples/apk-sentinel-sanitized-report.json)
-- [Public source repository](https://github.com/tmtz1/apk-sentinel-public-showcase)
+- [Public source repository](https://github.com/tmtz1/apk-sentinel)

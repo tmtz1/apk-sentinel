@@ -2,9 +2,17 @@
 
 **Willow & Birdie Innovations · Tmtz**
 
-APK Sentinel is an agent-oriented product for evidence-backed static analysis of Android APKs. This repository is the sanitized public product and evidence showcase; endpoint availability, payment activation, and customer intake remain deployment-specific launch gates.
+APK Sentinel is a deterministic, automation-friendly API for evidence-backed static analysis of Android APKs. This repository contains the sanitized product documentation and evidence package.
 
 The intended workflow is bounded and deterministic: validate one APK, analyze it statically inside a restricted job boundary, return a versioned JSON report, and clean up temporary artifacts.
+
+**Status:** Limited beta. **Endpoint:** `https://api.willowbirdie.com/v1/apk/triage`. **Payment:** x402 on the Base Sepolia testnet. **Availability:** the endpoint is available for bounded testing, while customer intake and support remain deployment-specific. This is API access, not a browser upload portal.
+
+## Validation first
+
+The app-only static-analysis lane has completed its current internal acceptance review. A nine-sample F-Droid edge-case corpus was exercised in isolated, static-only runs; initially rejected large and complex samples were rerun after bounded-input and partial-evidence handling were improved. Successful reports were checked for repeatability and cleanup.
+
+The [validation notes](validation/apk-sentinel-validation.md) and [real-world hard cases](docs/real-world-hard-cases.md) record what changed when real inputs exposed limits in admission policy, evidence scans, build provenance, cleanup, and concurrency. Unsupported input is not a malware verdict, and partial evidence is marked rather than presented as complete.
 
 Traditional analysis tools often assume a human analyst will interpret a screen or an ambiguous error. Agent-facing systems need stable schemas, bounded behavior, explicit analysis state, and machine-readable failure conditions. APK Sentinel is designed around that contract.
 
@@ -55,15 +63,7 @@ Representative report shape:
 }
 ```
 
-## What real inputs changed
-
-Testing against real APKs exposed input-limit, evidence-truncation, provenance, cleanup, and concurrency edge cases. Those failures became explicit report states, implementation changes, and regression tests rather than hidden assumptions.
-
-Read the detailed [real-world hard cases and fixes](docs/real-world-hard-cases.md) for the engineering record. The short version: unsupported input is not a malware verdict, partial evidence must be marked as partial, analyzer build identity matters for repeatability, cleanup is part of correctness, and concurrency tests stay isolated from production policy.
-
 ## Status and limits
-
-The app-only static-analysis lane has completed its current internal acceptance review. A nine-sample F-Droid edge-case corpus was exercised in isolated, static-only runs; the initially rejected large/complex samples were rerun after bounded-input and partial-evidence handling were improved. Successful reports were checked for repeatability and cleanup.
 
 The analyzer now uses a 125 MiB input ceiling and reports when bounded URL or indicator scans are truncated rather than silently presenting incomplete evidence. These limits are safety bounds, not a promise of complete APK coverage.
 
