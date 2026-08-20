@@ -6,6 +6,8 @@ APK Sentinel is an agent-oriented product for evidence-backed static analysis of
 
 The intended workflow is bounded and deterministic: validate one APK, analyze it statically inside a restricted job boundary, return a versioned JSON report, and clean up temporary artifacts.
 
+Traditional analysis tools often assume a human analyst will interpret a screen or an ambiguous error. Agent-facing systems need stable schemas, bounded behavior, explicit analysis state, and machine-readable failure conditions. APK Sentinel is designed around that contract.
+
 ## What it is designed to show
 
 - APK identity and package metadata
@@ -39,6 +41,25 @@ The intended workflow is bounded and deterministic: validate one APK, analyze it
 - [Live agent-facing site](https://apk-sentinel.willowbirdie.com/)
 - [Security boundary](docs/security.md)
 - [Machine-readable product summary](llms.txt)
+
+![APK Sentinel architecture](assets/apk-sentinel-architecture.svg)
+
+Representative report shape:
+
+```json
+{
+  "schema_version": "1.0",
+  "package": {"package_name": "com.example.apksentinelfixture"},
+  "findings": {"findings": [{"rule_id": "suspicious.dynamic_code_loading", "severity": "high"}]},
+  "risk_score": {"total": 70}
+}
+```
+
+## What real inputs changed
+
+Testing against real APKs exposed input-limit, evidence-truncation, provenance, cleanup, and concurrency edge cases. Those failures became explicit report states, implementation changes, and regression tests rather than hidden assumptions.
+
+Read the detailed [real-world hard cases and fixes](docs/real-world-hard-cases.md) for the engineering record. The short version: unsupported input is not a malware verdict, partial evidence must be marked as partial, analyzer build identity matters for repeatability, cleanup is part of correctness, and concurrency tests stay isolated from production policy.
 
 ## Status and limits
 
