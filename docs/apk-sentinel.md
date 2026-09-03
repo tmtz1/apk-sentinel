@@ -2,9 +2,9 @@
 
 ## Deterministic Android APK triage
 
-APK Sentinel is a private, in-development Willow & Birdie project for evidence-backed static analysis of Android application packages.
+APK Sentinel is a limited-beta Willow & Birdie service for evidence-backed static analysis of Android application packages.
 
-The planned product accepts one APK and produces a bounded, versioned JSON triage report. The canonical report core is intended to be repeatable for the same APK, analyzer version, and rules version.
+The bounded service route accepts one APK through x402 v2 exact payment on Base mainnet and produces a bounded, versioned JSON triage report. The canonical report core is repeatable for the same APK, analyzer version, and rules version. General human/private customer intake remains closed.
 
 ## Planned report areas
 

@@ -3,7 +3,7 @@
   "info": {
     "title": "APK Sentinel API",
     "version": "1.0.0",
-    "description": "Deterministic, automation-friendly static APK triage for software agents, automated security workflows, and human analysts. This limited-beta deployment accepts one Android APK and returns evidence-backed JSON. Payment uses x402 on Base Sepolia; general customer intake and support are not enabled."
+    "description": "Agent-oriented static APK triage. The current bounded API accepts one Android APK and returns deterministic, evidence-backed JSON through x402 v2 exact payment on Base mainnet at 0.01 USDC per accepted APK through 2026-09-05 UTC. General human/private intake is closed."
   },
   "servers": [
     {

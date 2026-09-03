@@ -42,4 +42,4 @@ APK Sentinel accepts one Android APK and produces a structured triage report for
 
 ## Availability
 
-Deployment, payment, pricing, and intake availability are deployment-specific and must not be inferred from this showcase repository.
+Current bounded availability: `POST https://api.willowbirdie.com/v1/apk/triage` accepts one APK per request through x402 v2 exact payment on Base mainnet (`eip155:8453`) at `0.01 USDC` (`10,000` atomic units) through 2026-09-05 UTC. General human/private intake is closed; concurrency is `1`, automatic retries are disabled, and analysis is static-only. Do not treat this as a guarantee that an APK is safe or malicious.

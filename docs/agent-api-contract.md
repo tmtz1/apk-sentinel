@@ -1,6 +1,12 @@
 # APK Sentinel — Agent-Facing Contract
 
-This is the public product contract for the current limited-beta deployment. The endpoint is callable for bounded testing through x402 on Base Sepolia. This is API access, not a browser upload portal; general customer intake and support are not enabled. The canonical machine-readable status is [product-status.json](../product-status.json).
+This is the public product contract for the current bounded AI-agent/service-buyer beta.
+
+- Base URL: `https://api.willowbirdie.com`
+- Payment: x402 v2 exact on Base mainnet (`eip155:8453`)
+- Current price: `0.01 USDC` (`10,000` atomic units) through 2026-09-05 UTC
+- General human/private customer intake is not enabled.
+- Canonical machine-readable status: [product-status.json](../product-status.json).
 
 ## Primary operation
 
@@ -59,4 +65,4 @@ Expected classes include malformed upload, oversized upload, invalid APK, analys
 - No APK installation, execution, or side-loading.
 - Extracted URLs are inert evidence and are not fetched.
 - Automatic retries are not assumed by this contract.
-- Availability, pricing, payment, retention, support, and data residency are deployment-specific.
+- Current bounded payment and availability are documented above. Retention, support, and data residency remain deployment-specific.
