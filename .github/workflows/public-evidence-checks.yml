@@ -25,7 +25,9 @@ jobs:
           assert status['browser_upload'] is False
           assert status['general_customer_intake'] is False
           assert status['payment']['enabled'] is True
-          assert status['payment']['network'] == 'Base Sepolia'
+          assert status['payment']['network'] == 'Base mainnet'
+          assert status['payment']['network_id'] == 'eip155:8453'
+          assert status['payment']['atomic_amount'] == '10000'
 
           openapi = json.loads(Path('docs/openapi.json').read_text())
           assert openapi['servers'][0]['url'] == status['endpoint'].rsplit('/v1/', 1)[0]

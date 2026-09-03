@@ -6,7 +6,7 @@ This is the public product contract for the current bounded AI-agent/service-buy
 - Payment: x402 v2 exact on Base mainnet (`eip155:8453`)
 - Current price: `0.01 USDC` (`10,000` atomic units) through 2026-09-05 UTC
 - General human/private customer intake is not enabled.
-- Canonical machine-readable status: [product-status.json](../product-status.json).
+- Canonical machine-readable status: [product-status.json](product-status.json).
 
 ## Primary operation
 
