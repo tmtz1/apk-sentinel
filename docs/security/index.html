@@ -1,1 +1,27 @@
-<!doctype html><meta charset="utf-8"><meta name="robots" content="index,follow"><link rel="canonical" href="https://apk-sentinel.willowbirdie.com/security/"><title>APK Sentinel security</title><meta http-equiv="refresh" content="0;url=../security.md"><p><a href="../security.md">APK Sentinel security</a></p>
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>APK Sentinel security</title><link rel="canonical" href="https://apk-sentinel.willowbirdie.com/security/"><style>body{margin:0;background:#101419;color:#e8edf2;font:17px/1.65 system-ui,sans-serif}main{max-width:900px;margin:auto;padding:32px 20px 64px}a{color:#77d6a3;overflow-wrap:anywhere}nav{display:flex;flex-wrap:wrap;gap:16px;border-bottom:1px solid #52606d;padding-bottom:16px}h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.2}pre{overflow:auto;padding:16px;background:#171d24}code{overflow-wrap:anywhere}aside{border-left:4px solid #e8c46c;padding:12px 18px;background:#171d24;margin:24px 0}table{display:block;overflow:auto;border-collapse:collapse}td,th{padding:8px;border:1px solid #52606d}img{max-width:100%;height:auto}footer{margin-top:40px;border-top:1px solid #52606d;padding-top:16px}</style></head>
+<body><main><nav aria-label="Main"><a href="/">Home</a><a href="/about/">About</a><a href="/pricing/">Availability</a><a href="/agent-api-contract/">API contract</a><a href="/report-guide/">Report guide</a><a href="/contact/">Contact</a><a href="/security/">Security</a></nav><aside><strong>Availability: unverified.</strong> The published beta terms expired. An unpaid challenge is observable, but paid analysis, current terms and worker readiness have not been reverified. Do not submit payment or private APKs until current terms are confirmed. <a href="/product-status.json">Canonical status</a>.</aside><h1>APK Sentinel security</h1>
+<h2>Scope</h2>
+<p>APK Sentinel is designed as bounded static APK triage. The documented product boundary is:</p>
+<ul>
+<li>APK files are treated as untrusted input.</li>
+<li>The analyzer does not install or execute APKs.</li>
+<li>Extracted URLs and domains are evidence only; the static analyzer does not fetch them as part of this showcase.</li>
+<li>Results are structured, schema-versioned JSON with evidence and explicit limitations.</li>
+<li>The public documentation site accepts no APK uploads and exposes no customer intake endpoint.</li>
+</ul>
+<h2>Authorized use</h2>
+<p>Only submit APKs that you are authorized to analyze. Do not send credentials, private keys, tokens, personal data, or customer artifacts through the public documentation site or the contact mailbox.</p>
+<h2>Reporting a security issue</h2>
+<p>Send a concise report to <a href="mailto:admin@willowbirdie.com?subject=APK%20Sentinel%20security%20report">admin@willowbirdie.com</a>. Do not include secrets or live customer samples. Describe the affected public URL, impact, reproduction steps, and a safe test fixture where possible.</p>
+<p>This page is a product security boundary, not a guarantee that every deployment has identical controls. Deployment-specific isolation, retention, payment, availability, and incident-response terms must be confirmed for the deployment being used.</p>
+<h2>Named endpoint: unresolved operational guarantees</h2>
+<p>For <code>api.willowbirdie.com</code>, deletion deadlines, failure-retention windows, sample-metadata logging, data residency, and support response times have <strong>not been reverified for current public use</strong>. Ephemeral processing is a design intent, not a time-bound deletion guarantee. The current <a href="/product-status.json">availability record</a> therefore does not authorize private intake.</p>
+<p>Allowed evaluation material is limited to authorized synthetic/public fixtures after availability and terms are confirmed. Do not submit customer or confidential samples. Reopening requires a dated operator-backed retention/logging statement and verified success/failure cleanup; documentation changes do not satisfy that gate.</p>
+<h2>Evidence</h2>
+<ul>
+<li><a href="/agent-api-contract/">Agent-facing API contract</a></li>
+<li><a href="/openapi.json">OpenAPI description</a></li>
+<li><a href="/examples/apk-sentinel-sanitized-report.json">Synthetic report</a></li>
+<li><a href="https://github.com/tmtz1/apk-sentinel">Public source repository</a></li>
+</ul><footer><a href="/security.md">Markdown source</a> · <a href="https://github.com/tmtz1/apk-sentinel">Documentation and evidence</a></footer></main></body></html>

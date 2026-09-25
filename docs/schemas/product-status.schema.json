@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "APK Sentinel published availability record",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "product",
+    "status",
+    "endpoint_publicly_callable",
+    "endpoint",
+    "browser_upload",
+    "general_customer_intake",
+    "customer_support",
+    "payment",
+    "last_verified",
+    "reviewed_at",
+    "availability_note",
+    "observed_unpaid_challenge"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "1.1"
+    },
+    "product": {
+      "type": "string"
+    },
+    "status": {
+      "enum": [
+        "limited-beta",
+        "paused",
+        "expired",
+        "unverified"
+      ]
+    },
+    "endpoint_publicly_callable": {
+      "type": "boolean"
+    },
+    "endpoint": {
+      "type": "string",
+      "pattern": "^https://"
+    },
+    "browser_upload": {
+      "type": "boolean"
+    },
+    "general_customer_intake": {
+      "type": "boolean"
+    },
+    "customer_support": {
+      "type": "boolean"
+    },
+    "payment": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "enabled",
+        "mechanism",
+        "network",
+        "network_id",
+        "price_usdc",
+        "atomic_amount",
+        "test_ends",
+        "terms_status"
+      ],
+      "properties": {
+        "enabled": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        },
+        "mechanism": {
+          "type": "string"
+        },
+        "network": {
+          "type": "string"
+        },
+        "network_id": {
+          "type": "string"
+        },
+        "price_usdc": {
+          "type": "string"
+        },
+        "atomic_amount": {
+          "type": "string"
+        },
+        "test_ends": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "terms_status": {
+          "enum": [
+            "current",
+            "expired",
+            "unverified"
+          ]
+        }
+      }
+    },
+    "last_verified": {
+      "type": "string",
+      "format": "date"
+    },
+    "reviewed_at": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "availability_note": {
+      "type": "string"
+    },
+    "observed_unpaid_challenge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "checked_at",
+        "http_status",
+        "network_id",
+        "atomic_amount",
+        "asset",
+        "scope"
+      ],
+      "properties": {
+        "checked_at": {
+          "type": "string"
+        },
+        "http_status": {
+          "const": 402
+        },
+        "network_id": {
+          "type": "string"
+        },
+        "atomic_amount": {
+          "type": "string"
+        },
+        "asset": {
+          "type": "string"
+        },
+        "scope": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

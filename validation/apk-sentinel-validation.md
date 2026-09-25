@@ -1,5 +1,8 @@
 # APK Sentinel validation notes
 
+> Historical evidence, contextualized September 24, 2026. The test count below belongs to this earlier observation, not the current deployed build or a fresh test run. Its exact run date, analyzer commit and rules identifier are not recorded in this public packet; they remain unknown. The 395-test Oxproxion record and 426-test general record must not be combined into one suite result.
+
+
 ## What was exercised
 
 The private APK Sentinel implementation was tested with its local test suite:
@@ -37,7 +40,7 @@ Observed report properties:
 - Four static indicators
 - Four evidence-backed findings
 - Deterministic rule-based risk score: `70`
-- Canonical JSON size: 2,850 bytes
+- Historical recorded canonical size: 2,850 bytes. Current checked-in file: 4,128 bytes; compact sorted UTF-8 serialization (no newline): 2,850 bytes, measured September 24, 2026. The old size is not evidence of the current file size.
 
 ## What this demonstrates
 

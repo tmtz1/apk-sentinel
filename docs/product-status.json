@@ -1,20 +1,31 @@
 {
-  "schema_version": "1.0",
+  "schema_version": "1.1",
   "product": "APK Sentinel",
-  "status": "limited-beta",
+  "status": "unverified",
   "endpoint_publicly_callable": true,
   "endpoint": "https://api.willowbirdie.com/v1/apk/triage",
   "browser_upload": false,
   "general_customer_intake": false,
   "customer_support": false,
   "payment": {
-    "enabled": true,
+    "enabled": null,
     "mechanism": "x402 v2 exact",
     "network": "Base mainnet",
     "network_id": "eip155:8453",
     "price_usdc": "0.01",
     "atomic_amount": "10000",
-    "test_ends": "2026-09-05T23:59:59Z"
+    "test_ends": "2026-09-05T23:59:59Z",
+    "terms_status": "expired"
   },
-  "last_verified": "2026-09-03"
+  "last_verified": "2026-09-03",
+  "reviewed_at": "2026-09-25T02:41:16Z",
+  "availability_note": "The published beta terms expired. An unpaid challenge is observable, but paid analysis, current terms and worker readiness have not been reverified. Do not submit payment or private APKs until current terms are confirmed.",
+  "observed_unpaid_challenge": {
+    "checked_at": "2026-09-25T02:41:16Z",
+    "http_status": 402,
+    "network_id": "eip155:8453",
+    "atomic_amount": "10000",
+    "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+    "scope": "Unpaid empty POST only; no upload, payment, analysis, retention or settlement verified."
+  }
 }

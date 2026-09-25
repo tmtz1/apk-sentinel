@@ -6,7 +6,17 @@ APK Sentinel is a deterministic, automation-friendly API for evidence-backed sta
 
 The intended workflow is bounded and deterministic: validate one APK, analyze it statically inside a restricted job boundary, return a versioned JSON report, and clean up temporary artifacts.
 
-**Status:** Limited beta. **Endpoint:** `https://api.willowbirdie.com/v1/apk/triage`. **Payment:** x402 v2 exact on Base mainnet (`eip155:8453`). **Price:** `0.01 USDC` (`10,000` atomic units) through 2026-09-05 UTC. **Availability:** bounded AI-agent/service-buyer testing only; general human/private intake is closed. This is API access, not a browser upload portal. [Canonical status](product-status.json).
+**Availability: unverified; published beta terms expired.** The endpoint responds to an unpaid probe, but paid analysis and renewed terms have not been reverified. Do not submit payment or private APKs. See the [canonical status](product-status.json) and [availability explanation](docs/pricing.md).
+
+## Read a report first
+
+The [synthetic report](examples/apk-sentinel-sanitized-report.json) shows four static API indicators. Each finding repeats its supporting indicator evidence; each scoring contribution names its finding rule. The score of 70 is a triage priority, **not a 70% probability of malware**. Check `scan_truncated` in URL and indicator sections before interpreting missing evidence.
+
+- **Evaluate output:** [report and scoring guide](docs/report-guide.md).
+- **Integrate cautiously:** [API contract and verification limits](docs/agent-api-contract.md).
+- **Inspect evidence:** [validation notes](validation/apk-sentinel-validation.md).
+
+Architecture in text: validate one bounded APK → analyze statically without network access → validate report structure and evidence references → return JSON → clean up the job. The graphic below is an illustration of this intended boundary, not a live deployment attestation.
 
 ## Validation first
 

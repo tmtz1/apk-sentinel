@@ -1,0 +1,537 @@
+{
+  "$defs": {
+    "CertificateInfo": {
+      "additionalProperties": false,
+      "description": "X.509 certificate metadata extracted from an APK signature block.\n\nFingerprints are lowercase unseparated hex; serial_number is a decimal\nstring to avoid oversized JSON integers.  Dates are timezone-aware.",
+      "properties": {
+        "sha256_fingerprint": {
+          "title": "Sha256 Fingerprint",
+          "type": "string"
+        },
+        "sha1_fingerprint": {
+          "title": "Sha1 Fingerprint",
+          "type": "string"
+        },
+        "subject": {
+          "title": "Subject",
+          "type": "string"
+        },
+        "issuer": {
+          "title": "Issuer",
+          "type": "string"
+        },
+        "serial_number": {
+          "title": "Serial Number",
+          "type": "string"
+        },
+        "not_valid_before": {
+          "format": "date-time",
+          "title": "Not Valid Before",
+          "type": "string"
+        },
+        "not_valid_after": {
+          "format": "date-time",
+          "title": "Not Valid After",
+          "type": "string"
+        },
+        "signature_algorithm": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Signature Algorithm"
+        },
+        "hash_algorithm": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Hash Algorithm"
+        }
+      },
+      "required": [
+        "sha256_fingerprint",
+        "sha1_fingerprint",
+        "subject",
+        "issuer",
+        "serial_number",
+        "not_valid_before",
+        "not_valid_after",
+        "signature_algorithm",
+        "hash_algorithm"
+      ],
+      "title": "CertificateInfo",
+      "type": "object"
+    },
+    "ComponentInfo": {
+      "additionalProperties": false,
+      "description": "A single Android component with its exported status.\n\nAll fields are frozen; extra fields are forbidden.",
+      "properties": {
+        "kind": {
+          "enum": [
+            "activity",
+            "activity_alias",
+            "service",
+            "receiver",
+            "provider"
+          ],
+          "title": "Kind",
+          "type": "string"
+        },
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "is_exported": {
+          "title": "Is Exported",
+          "type": "boolean"
+        },
+        "exported_explicit": {
+          "title": "Exported Explicit",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "kind",
+        "name",
+        "is_exported",
+        "exported_explicit"
+      ],
+      "title": "ComponentInfo",
+      "type": "object"
+    },
+    "ComponentSummary": {
+      "additionalProperties": false,
+      "description": "Summary of all declared components in a deterministic order.\n\nComponents are sorted by (kind, name) using exact code-point order.",
+      "properties": {
+        "components": {
+          "items": {
+            "$ref": "#/$defs/ComponentInfo"
+          },
+          "title": "Components",
+          "type": "array"
+        }
+      },
+      "required": [
+        "components"
+      ],
+      "title": "ComponentSummary",
+      "type": "object"
+    },
+    "Finding": {
+      "additionalProperties": false,
+      "description": "One deterministic rule finding backed by static evidence.",
+      "properties": {
+        "rule_id": {
+          "enum": [
+            "suspicious.accessibility_abuse",
+            "suspicious.dynamic_code_loading",
+            "suspicious.reflection",
+            "suspicious.shell_execution",
+            "suspicious.sms_telephony"
+          ],
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "severity": {
+          "enum": [
+            "low",
+            "medium",
+            "high"
+          ],
+          "title": "Severity",
+          "type": "string"
+        },
+        "title": {
+          "title": "Title",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 32,
+          "minItems": 1,
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "rule_id",
+        "severity",
+        "title",
+        "evidence"
+      ],
+      "title": "Finding",
+      "type": "object"
+    },
+    "FindingSummary": {
+      "additionalProperties": false,
+      "description": "Deterministically ordered evidence-backed findings.",
+      "properties": {
+        "findings": {
+          "items": {
+            "$ref": "#/$defs/Finding"
+          },
+          "title": "Findings",
+          "type": "array"
+        }
+      },
+      "required": [
+        "findings"
+      ],
+      "title": "FindingSummary",
+      "type": "object"
+    },
+    "PackageMetadata": {
+      "additionalProperties": false,
+      "description": "Immutable parsed APK package metadata.\n\nAll fields are frozen; extra fields are forbidden.",
+      "properties": {
+        "package_name": {
+          "title": "Package Name",
+          "type": "string"
+        },
+        "version_name": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version Name"
+        },
+        "version_code": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Version Code"
+        },
+        "min_sdk": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Min Sdk"
+        },
+        "target_sdk": {
+          "anyOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "default": null,
+          "title": "Target Sdk"
+        }
+      },
+      "required": [
+        "package_name"
+      ],
+      "title": "PackageMetadata",
+      "type": "object"
+    },
+    "PermissionInfo": {
+      "additionalProperties": false,
+      "description": "A single requested Android permission with its protection level.",
+      "properties": {
+        "name": {
+          "title": "Name",
+          "type": "string"
+        },
+        "protection_level": {
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "Protection Level"
+        },
+        "is_dangerous": {
+          "title": "Is Dangerous",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "name",
+        "protection_level",
+        "is_dangerous"
+      ],
+      "title": "PermissionInfo",
+      "type": "object"
+    },
+    "PermissionSummary": {
+      "additionalProperties": false,
+      "description": "Summary of all requested permissions in a deterministic order.",
+      "properties": {
+        "permissions": {
+          "items": {
+            "$ref": "#/$defs/PermissionInfo"
+          },
+          "title": "Permissions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "permissions"
+      ],
+      "title": "PermissionSummary",
+      "type": "object"
+    },
+    "RiskContribution": {
+      "additionalProperties": false,
+      "description": "Fixed point contribution from one finding rule.",
+      "properties": {
+        "rule_id": {
+          "enum": [
+            "suspicious.accessibility_abuse",
+            "suspicious.dynamic_code_loading",
+            "suspicious.reflection",
+            "suspicious.shell_execution",
+            "suspicious.sms_telephony"
+          ],
+          "title": "Rule Id",
+          "type": "string"
+        },
+        "points": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Points",
+          "type": "integer"
+        }
+      },
+      "required": [
+        "rule_id",
+        "points"
+      ],
+      "title": "RiskContribution",
+      "type": "object"
+    },
+    "RiskScore": {
+      "additionalProperties": false,
+      "description": "Bounded deterministic score with an auditable rule breakdown.",
+      "properties": {
+        "total": {
+          "maximum": 100,
+          "minimum": 0,
+          "title": "Total",
+          "type": "integer"
+        },
+        "contributions": {
+          "items": {
+            "$ref": "#/$defs/RiskContribution"
+          },
+          "maxItems": 5,
+          "title": "Contributions",
+          "type": "array"
+        }
+      },
+      "required": [
+        "total",
+        "contributions"
+      ],
+      "title": "RiskScore",
+      "type": "object"
+    },
+    "SigningSummary": {
+      "additionalProperties": false,
+      "description": "Detected signing schemes and certificate metadata for an APK.\n\nThis is a *detection* report \u2014 it never claims cryptographic\nverification.  Schemes are in fixed order v1, v2, v3, v3.1.",
+      "properties": {
+        "is_signed": {
+          "title": "Is Signed",
+          "type": "boolean"
+        },
+        "schemes": {
+          "items": {
+            "enum": [
+              "v1",
+              "v2",
+              "v3",
+              "v3.1"
+            ],
+            "type": "string"
+          },
+          "title": "Schemes",
+          "type": "array"
+        },
+        "certificates": {
+          "items": {
+            "$ref": "#/$defs/CertificateInfo"
+          },
+          "title": "Certificates",
+          "type": "array"
+        }
+      },
+      "required": [
+        "is_signed",
+        "schemes",
+        "certificates"
+      ],
+      "title": "SigningSummary",
+      "type": "object"
+    },
+    "SuspiciousIndicator": {
+      "additionalProperties": false,
+      "description": "One suspicious static API category and the signatures that triggered it.",
+      "properties": {
+        "category": {
+          "enum": [
+            "accessibility_abuse",
+            "dynamic_code_loading",
+            "reflection",
+            "shell_execution",
+            "sms_telephony"
+          ],
+          "title": "Category",
+          "type": "string"
+        },
+        "evidence": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Evidence",
+          "type": "array"
+        }
+      },
+      "required": [
+        "category",
+        "evidence"
+      ],
+      "title": "SuspiciousIndicator",
+      "type": "object"
+    },
+    "SuspiciousIndicatorSummary": {
+      "additionalProperties": false,
+      "description": "Deterministically ordered suspicious static API indicators.",
+      "properties": {
+        "indicators": {
+          "items": {
+            "$ref": "#/$defs/SuspiciousIndicator"
+          },
+          "title": "Indicators",
+          "type": "array"
+        },
+        "scan_truncated": {
+          "default": false,
+          "title": "Scan Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "indicators"
+      ],
+      "title": "SuspiciousIndicatorSummary",
+      "type": "object"
+    },
+    "URLEvidence": {
+      "additionalProperties": false,
+      "description": "Bounded URLs and domains found in static APK string evidence.",
+      "properties": {
+        "urls": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Urls",
+          "type": "array"
+        },
+        "domains": {
+          "items": {
+            "type": "string"
+          },
+          "title": "Domains",
+          "type": "array"
+        },
+        "scan_truncated": {
+          "default": false,
+          "title": "Scan Truncated",
+          "type": "boolean"
+        }
+      },
+      "required": [
+        "urls",
+        "domains"
+      ],
+      "title": "URLEvidence",
+      "type": "object"
+    }
+  },
+  "additionalProperties": false,
+  "description": "Stable, versioned Phase 1 static-analysis report.",
+  "properties": {
+    "schema_version": {
+      "const": "1.0",
+      "title": "Schema Version",
+      "type": "string"
+    },
+    "sha256": {
+      "pattern": "^[0-9a-f]{64}$",
+      "title": "Sha256",
+      "type": "string"
+    },
+    "package": {
+      "$ref": "#/$defs/PackageMetadata"
+    },
+    "permissions": {
+      "$ref": "#/$defs/PermissionSummary"
+    },
+    "components": {
+      "$ref": "#/$defs/ComponentSummary"
+    },
+    "signing": {
+      "$ref": "#/$defs/SigningSummary"
+    },
+    "url_evidence": {
+      "$ref": "#/$defs/URLEvidence"
+    },
+    "indicators": {
+      "$ref": "#/$defs/SuspiciousIndicatorSummary"
+    },
+    "findings": {
+      "$ref": "#/$defs/FindingSummary"
+    },
+    "risk_score": {
+      "$ref": "#/$defs/RiskScore"
+    }
+  },
+  "required": [
+    "schema_version",
+    "sha256",
+    "package",
+    "permissions",
+    "components",
+    "signing",
+    "url_evidence",
+    "indicators",
+    "findings",
+    "risk_score"
+  ],
+  "title": "AnalysisReport",
+  "type": "object",
+  "$schema": "https://json-schema.org/draft/2020-12/schema"
+}

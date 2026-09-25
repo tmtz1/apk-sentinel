@@ -1,47 +1,25 @@
 name: Public evidence checks
-
 on:
   push:
   pull_request:
-
+  schedule:
+    - cron: '17 9 * * *'
+  workflow_dispatch:
+permissions:
+  contents: read
 jobs:
   validate-public-contract:
     runs-on: ubuntu-latest
+    timeout-minutes: 5
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
-          python-version: '3.x'
-      - name: Validate JSON and canonical status
-        run: |
-          python - <<'PY'
-          import json
-          from pathlib import Path
-
-          status = json.loads(Path('product-status.json').read_text())
-          assert status['status'] == 'limited-beta'
-          assert status['endpoint_publicly_callable'] is True
-          assert status['endpoint'] == 'https://api.willowbirdie.com/v1/apk/triage'
-          assert status['browser_upload'] is False
-          assert status['general_customer_intake'] is False
-          assert status['payment']['enabled'] is True
-          assert status['payment']['network'] == 'Base mainnet'
-          assert status['payment']['network_id'] == 'eip155:8453'
-          assert status['payment']['atomic_amount'] == '10000'
-
-          openapi = json.loads(Path('docs/openapi.json').read_text())
-          assert openapi['servers'][0]['url'] == status['endpoint'].rsplit('/v1/', 1)[0]
-          assert ('no live' + ' endpoint') not in openapi['servers'][0]['description'].lower()
-
-          placeholder = 'api.' + 'example.invalid'
-          for path in ['llms.txt', 'docs/llms.txt']:
-              text = Path(path).read_text()
-              assert 'limited-beta' in text or 'Limited beta' in text
-              assert status['endpoint'] in text
-              assert placeholder not in text
-          PY
-      - name: Validate representative JSON artifacts
-        run: |
-          python -m json.tool examples/apk-sentinel-sanitized-report.json >/dev/null
-          python -m json.tool docs/examples/apk-sentinel-sanitized-report.json >/dev/null
-          python -m json.tool product-status.json >/dev/null
+          python-version: '3.12'
+      - run: python -m pip install -r requirements-docs.txt
+      - name: Contract regression tests
+        run: python -m unittest discover -s tests -v
+      - name: Schema, copies, semantics and availability freshness
+        run: python scripts/validate_public.py
+      - name: Generated human pages match sources
+        run: python scripts/render_docs.py --check

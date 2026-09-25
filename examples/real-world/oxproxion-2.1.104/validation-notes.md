@@ -1,5 +1,8 @@
 # oxproxion validation notes
 
+> Historical evidence, contextualized September 24, 2026. The test count below belongs to this earlier observation, not the current deployed build or a fresh test run. Its exact run date, analyzer commit and rules identifier are not recorded in this public packet; they remain unknown. The 395-test Oxproxion record and 426-test general record must not be combined into one suite result.
+
+
 ## Commands and evidence
 
 Source artifact:

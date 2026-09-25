@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>APK Sentinel project description</title><link rel="canonical" href="https://apk-sentinel.willowbirdie.com/apk-sentinel/"><style>body{margin:0;background:#101419;color:#e8edf2;font:17px/1.65 system-ui,sans-serif}main{max-width:900px;margin:auto;padding:32px 20px 64px}a{color:#77d6a3;overflow-wrap:anywhere}nav{display:flex;flex-wrap:wrap;gap:16px;border-bottom:1px solid #52606d;padding-bottom:16px}h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.2}pre{overflow:auto;padding:16px;background:#171d24}code{overflow-wrap:anywhere}aside{border-left:4px solid #e8c46c;padding:12px 18px;background:#171d24;margin:24px 0}table{display:block;overflow:auto;border-collapse:collapse}td,th{padding:8px;border:1px solid #52606d}img{max-width:100%;height:auto}footer{margin-top:40px;border-top:1px solid #52606d;padding-top:16px}</style></head>
+<body><main><nav aria-label="Main"><a href="/">Home</a><a href="/about/">About</a><a href="/pricing/">Availability</a><a href="/agent-api-contract/">API contract</a><a href="/report-guide/">Report guide</a><a href="/contact/">Contact</a><a href="/security/">Security</a></nav><aside><strong>Availability: unverified.</strong> The published beta terms expired. An unpaid challenge is observable, but paid analysis, current terms and worker readiness have not been reverified. Do not submit payment or private APKs until current terms are confirmed. <a href="/product-status.json">Canonical status</a>.</aside><h1>APK Sentinel project description</h1>
+<h2>Deterministic Android APK triage</h2>
+<p>APK Sentinel is a Willow &amp; Birdie research product for evidence-backed static analysis of Android application packages.</p>
+<p>The intended service workflow accepts one APK and produces a bounded, versioned JSON triage report. Current paid availability is unverified; consult <a href="/product-status.json">product status</a>. The canonical report core is repeatable for the same APK, analyzer version, and rules version. General human/private customer intake remains closed.</p>
+<h2>Report areas represented in published evidence</h2>
+<ul>
+<li>Package metadata and APK identity</li>
+<li>Requested permissions and dangerous combinations</li>
+<li>Exported Android components</li>
+<li>Signing certificate metadata and fingerprints</li>
+<li>Bounded URL, domain, and IP evidence</li>
+<li>Suspicious API indicators with source references</li>
+<li>Structured findings with severity and category</li>
+<li>A deterministic rule-based risk score</li>
+</ul>
+<h2>Explicit non-goals</h2>
+<ul>
+<li>No APK installation or execution</li>
+<li>No dynamic analysis in the current MVP</li>
+<li>No URL-based APK ingestion</li>
+<li>No sample retention as a product feature</li>
+<li>No VirusTotal dependency or sample resale</li>
+<li>No LLM-generated core scoring</li>
+</ul>
+<p>The project is not a guarantee that an APK is safe or malicious. Static analysis can miss encrypted, downloaded, environment-triggered, or runtime-only behavior.</p><footer><a href="/apk-sentinel.md">Markdown source</a> · <a href="https://github.com/tmtz1/apk-sentinel">Documentation and evidence</a></footer></main></body></html>
