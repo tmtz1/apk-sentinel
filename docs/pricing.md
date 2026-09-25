@@ -1,9 +1,17 @@
 # APK Sentinel availability and pricing
 
-APK Sentinel is a deterministic, automation-friendly static APK triage API in a limited beta. The current bounded service route uses x402 v2 exact payment on Base mainnet at 0.01 USDC per accepted APK through 2026-09-05 UTC. General human/private customer intake is closed; retention and support terms remain deployment-specific.
+**Published beta terms expired; current paid-service availability is unverified.**
 
-The current bounded service route is `POST https://api.willowbirdie.com/v1/apk/triage`, protected by x402 v2 exact payment on Base mainnet (`eip155:8453`) at `0.01 USDC` per accepted APK (`10,000` atomic units) through 2026-09-05 UTC. One APK is accepted per request; concurrency remains `1` and automatic retries are disabled.
+The [canonical status record](product-status.json) is the only maintained availability record. Its original September 3 verification date has not been advanced to imply a new paid-service test.
 
-This is an agent/service-buyer test, not unrestricted human or private APK intake. Static analysis only: APKs are not installed or executed. For a pilot or integration discussion, contact [admin@willowbirdie.com](mailto:admin@willowbirdie.com?subject=APK%20Sentinel%20pricing).
+## What was actually checked
 
-The public showcase contains synthetic and sanitized evidence only. No customer intake is enabled through this documentation site.
+An empty, unpaid `POST https://api.willowbirdie.com/v1/apk/triage` returned HTTP 402 on September 24, 2026 (America/Chicago; September 25 UTC). The challenge advertised x402 v2 exact, Base mainnet (`eip155:8453`), and `10000` atomic USDC units (`0.01 USDC`). These are **observed challenge values, not renewed pricing terms**. The previously published window ended September 5 UTC.
+
+No APK was uploaded, no payment was authorized, and no paid analysis, worker readiness, settlement, retention or cleanup was tested in this check. An endpoint answering is not evidence that the complete service works.
+
+## Before submitting anything
+
+Do not send payment or private APKs until the operator publishes current terms and verifies the paid workflow. General customer intake, browser uploads, and customer support are not enabled. No new price, deadline, retention guarantee or support SLA is being introduced by this documentation correction.
+
+For integrations or pilot discussions, contact [admin@willowbirdie.com](mailto:admin@willowbirdie.com). Do not email APKs or secrets.

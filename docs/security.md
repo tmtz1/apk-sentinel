@@ -20,6 +20,12 @@ Send a concise report to [admin@willowbirdie.com](mailto:admin@willowbirdie.com?
 
 This page is a product security boundary, not a guarantee that every deployment has identical controls. Deployment-specific isolation, retention, payment, availability, and incident-response terms must be confirmed for the deployment being used.
 
+## Named endpoint: unresolved operational guarantees
+
+For `api.willowbirdie.com`, deletion deadlines, failure-retention windows, sample-metadata logging, data residency, and support response times have **not been reverified for current public use**. Ephemeral processing is a design intent, not a time-bound deletion guarantee. The current [availability record](product-status.json) therefore does not authorize private intake.
+
+Allowed evaluation material is limited to authorized synthetic/public fixtures after availability and terms are confirmed. Do not submit customer or confidential samples. Reopening requires a dated operator-backed retention/logging statement and verified success/failure cleanup; documentation changes do not satisfy that gate.
+
 ## Evidence
 
 - [Agent-facing API contract](agent-api-contract.md)

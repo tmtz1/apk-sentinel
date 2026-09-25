@@ -1,0 +1,43 @@
+{
+  "observed_at": "2026-09-25T03:04:41.672327+00:00",
+  "method": "POST",
+  "url": "https://api.willowbirdie.com/v1/apk/triage",
+  "request_body": "empty; no APK or signed payment",
+  "http_status": 402,
+  "body": {
+    "error": "payment_required",
+    "paymentRequired": {
+      "scheme": "exact",
+      "network": "eip155:8453",
+      "payTo": "REDACTED_PUBLIC_RECIPIENT",
+      "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+      "maxAmountRequired": "10000"
+    }
+  },
+  "decoded_payment_required": {
+    "x402Version": 2,
+    "accepts": [
+      {
+        "scheme": "exact",
+        "network": "eip155:8453",
+        "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
+        "amount": "10000",
+        "payTo": "REDACTED_PUBLIC_RECIPIENT",
+        "maxTimeoutSeconds": 300,
+        "extra": {
+          "name": "USD Coin",
+          "version": "2"
+        }
+      }
+    ]
+  },
+  "redactions": [
+    "body.paymentRequired.payTo",
+    "decoded_payment_required.accepts[*].payTo"
+  ],
+  "omitted_header_fields": [
+    "error",
+    "resource",
+    "extensions"
+  ]
+}

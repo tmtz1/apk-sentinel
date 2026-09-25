@@ -1,0 +1,171 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>F-Droid corpus review</title><link rel="canonical" href="https://apk-sentinel.willowbirdie.com/f-droid-corpus-review/"><style>body{margin:0;background:#101419;color:#e8edf2;font:17px/1.65 system-ui,sans-serif}main{max-width:900px;margin:auto;padding:32px 20px 64px}a{color:#77d6a3;overflow-wrap:anywhere}nav{display:flex;flex-wrap:wrap;gap:16px;border-bottom:1px solid #52606d;padding-bottom:16px}h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.2}pre{overflow:auto;padding:16px;background:#171d24}code{overflow-wrap:anywhere}aside{border-left:4px solid #e8c46c;padding:12px 18px;background:#171d24;margin:24px 0}table{display:block;overflow:auto;border-collapse:collapse}td,th{padding:8px;border:1px solid #52606d}img{max-width:100%;height:auto}footer{margin-top:40px;border-top:1px solid #52606d;padding-top:16px}</style></head>
+<body><main><nav aria-label="Main"><a href="/">Home</a><a href="/about/">About</a><a href="/pricing/">Availability</a><a href="/agent-api-contract/">API contract</a><a href="/report-guide/">Report guide</a><a href="/contact/">Contact</a><a href="/security/">Security</a></nav><aside><strong>Availability: unverified.</strong> The published beta terms expired. An unpaid challenge is observable, but paid analysis, current terms and worker readiness have not been reverified. Do not submit payment or private APKs until current terms are confirmed. <a href="/product-status.json">Canonical status</a>.</aside><h1>F-Droid corpus review</h1>
+<h2>Why this review exists</h2>
+<p>The most useful part of testing APK Sentinel was not the number of green checks. It was finding where the analyzer met the real world and got too strict for its own good.</p>
+<p>This review brings together the public example already in this repository and two rounds of F-Droid testing. It focuses on what was learned, what changed, and what is worth showing publicly without turning private test material into a scrapbook.</p>
+<h2>The 20-sample view</h2>
+<p>The comparison set contains 20 real-world samples:</p>
+<ul>
+<li>9 samples from the earlier edge-case round</li>
+<li>10 samples from the later, broader corpus round</li>
+<li>1 separately documented F-Droid example already published here</li>
+</ul>
+<p>All testing was static analysis. The applications were not installed or run.</p>
+<h3>Earlier edge-case round</h3>
+<p>The first nine-sample round deliberately leaned toward larger packages and applications likely to exercise URL, DEX, permission, and metadata handling:</p>
+<ul>
+<li>VLC</li>
+<li>Termux</li>
+<li>Termux:API</li>
+<li>CanIWebView</li>
+<li>androidcrypt</li>
+<li>PGPony</li>
+<li>Just Video Player</li>
+<li>CryptoSafe</li>
+<li>Simple Text Crypt</li>
+</ul>
+<p>The first pass exposed two important boundary problems. One sample exceeded the input-size ceiling, and several others reached bounded evidence-scan limits. Those were not mysterious application failures; they were analyzer policy failures. The analyzer was protecting its resource budget, then treating the budget boundary as a reason to reject the whole sample.</p>
+<p>The fix was deliberately small: raise the input ceiling within the existing spool boundary, preserve evidence found before a scan cutoff, and mark the result as truncated instead of pretending the scan was complete. Regression tests were added before the implementation. The five affected samples were then rerun twice against the final analyzer build.</p>
+<p>Result after hardening: 9/9 samples produced reports, with deterministic repeat runs and cleanup checks passing.</p>
+<h3>Later corpus round</h3>
+<p>The later ten-sample round was designed to provide a different kind of pressure: a wider mix of ordinary, feature-rich, and relatively large F-Droid applications, plus a test-only simultaneous-job pass.</p>
+<table>
+<thead>
+<tr>
+<th>Sample</th>
+<th>Sequential dual-run outcome</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Conversations</td>
+<td>Report produced; schema-valid and byte-identical on repeat</td>
+</tr>
+<tr>
+<td>AntennaPod</td>
+<td>Report produced; schema-valid and byte-identical on repeat</td>
+</tr>
+<tr>
+<td>KDE Connect</td>
+<td>Report produced; schema-valid and byte-identical on repeat</td>
+</tr>
+<tr>
+<td>Aegis Authenticator</td>
+<td>Report produced; schema-valid and byte-identical on repeat</td>
+</tr>
+<tr>
+<td>AnkiDroid</td>
+<td>Bounded fail-closed result; repeat behavior matched</td>
+</tr>
+<tr>
+<td>Syncthing-Fork</td>
+<td>Bounded fail-closed result; repeat behavior matched</td>
+</tr>
+<tr>
+<td>FairEmail</td>
+<td>Bounded fail-closed result; repeat behavior matched</td>
+</tr>
+<tr>
+<td>Etar</td>
+<td>Bounded fail-closed result; repeat behavior matched</td>
+</tr>
+<tr>
+<td>NewPipe</td>
+<td>Bounded fail-closed result; repeat behavior matched</td>
+</tr>
+<tr>
+<td>F-Droid</td>
+<td>Bounded fail-closed result; repeat behavior matched</td>
+</tr>
+</tbody>
+</table>
+<p>Result: 4 report-producing samples and 6 deterministic bounded failures. These were expected limit outcomes, not silent crashes or inconsistent results. The test-only simultaneous pairs also kept their outputs separated and left no workspaces or analyzer jobs behind.</p>
+<h2>Coverage is separate from containment</h2>
+<p>This selected corpus is nonrepresentative and is not a detection-accuracy benchmark.</p>
+<table>
+<thead>
+<tr>
+<th>Later-round measure</th>
+<th>Published evidence</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Report production</td>
+<td>4 of 10 samples</td>
+</tr>
+<tr>
+<td>Bounded no-report outcomes</td>
+<td>6 of 10 samples</td>
+</tr>
+<tr>
+<td>Partial reports</td>
+<td>Count not recorded in the public packet</td>
+</tr>
+<tr>
+<td>Repeatability</td>
+<td>Reports described as byte-identical; bounded outcomes described as matching</td>
+</tr>
+<tr>
+<td>Cleanup/isolation</td>
+<td>Reported in historical runs; not re-exercised by documentation CI</td>
+</tr>
+<tr>
+<td>Unsupported vs malformed</td>
+<td>Per-sample classification and specific limit values not published; unknown</td>
+</tr>
+</tbody>
+</table>
+<p>The six no-report samples above reached APK/DEX bounds according to the original notes. More specific reason categories or limits cannot responsibly be reconstructed from aggregate prose. Recover sanitized run receipts before claiming a particular sample was malformed or supported. The next useful improvement is more report-producing coverage within the same resource boundary, not redefining bounded rejection as useful analysis.</p>
+<h2>What stayed the same</h2>
+<p>Across both rounds, the useful safety properties held:</p>
+<ul>
+<li>analysis remained static-only;</li>
+<li>reports were checked for repeatability;</li>
+<li>resource limits stayed explicit;</li>
+<li>evidence extraction was bounded rather than unbounded;</li>
+<li>cleanup was treated as part of the result, not an afterthought;</li>
+<li>successful reports were validated against the report schema;</li>
+<li>the risk score remained a rule-based triage aid, not a verdict;</li>
+<li>unusual permissions, components, reflection, or URLs were treated as clues for review, not proof of malicious intent.</li>
+</ul>
+<p>That consistency matters more than a flattering pass percentage. A detector that changes its mind between two identical inputs has bigger problems than one that says “I cannot process this within the current budget.”</p>
+<h2>What changed</h2>
+<p>The later corpus round differed in three useful ways.</p>
+<p>First, it included six samples that stopped at existing APK or DEX bounds. That showed the analyzer could fail closed and repeat the same decision, but it also made the remaining coverage gap visible: the corpus still contains workloads that need either a future bounded-analysis policy or a clearly documented unsupported disposition.</p>
+<p>Second, the earlier round led to a policy improvement. A scan cutoff is now represented as partial evidence instead of automatically poisoning the entire report. That is a better distinction between “the analyzer reached a safe limit” and “the APK is invalid.”</p>
+<p>Third, the later round included a separate simultaneous-job check without changing the normal production concurrency setting. Outputs remained attributed to the correct inputs, and cleanup held under the extra pressure.</p>
+<h2>The separately published real-world example</h2>
+<p>The existing Oxproxion example remains the best individual showcase in this repository. It is small enough to read, comes from an official F-Droid release, and demonstrates the difference between evidence and interpretation:</p>
+<ul>
+<li>permissions and exported components can be summarized in context;</li>
+<li>reflection can be flagged without calling it malicious;</li>
+<li>a low static score is not a safety certificate;</li>
+<li>provenance and verification limits should be recorded plainly;</li>
+<li>the APK itself does not need to be published to make the analysis useful.</li>
+</ul>
+<p>That example shows the report format. The two corpus rounds show how the analyzer behaves when real packages push against its boundaries. They serve different purposes and should stay separate.</p>
+<h2>What is worth showcasing</h2>
+<p>The strongest public story is not “20 APKs passed.” That would be tidy, and wrong in the interesting way.</p>
+<p>A better showcase is:</p>
+<ol>
+<li>the synthetic report for the machine-readable contract;</li>
+<li>the Oxproxion report for a readable, provenance-backed real-world example;</li>
+<li>the earlier nine-sample round for demonstrating that a boundary bug was found, fixed with tests, and rerun deterministically;</li>
+<li>the later ten-sample round for showing honest fail-closed behavior, repeatability, cleanup, and job isolation;</li>
+<li>the lessons below, because the failures are where the engineering work earned its keep.</li>
+</ol>
+<h2>Lessons learned</h2>
+<ol>
+<li>Limits need a failure policy. A safe bound is useful; rejecting every sample that reaches it is often too coarse.</li>
+<li>Partial evidence needs a visible marker. Otherwise a short report can look complete when it is not.</li>
+<li>Reproducibility includes the analyzer build. Results from different builds should not be mixed casually.</li>
+<li>A bounded failure can be a successful safety outcome. Empty output, sanitized errors, repeatable behavior, and cleanup are meaningful evidence.</li>
+<li>Concurrency deserves its own lane. Test simultaneous jobs separately while keeping the normal production setting conservative.</li>
+<li>Corpus testing should chase assumptions, not just popular applications. The awkward samples teach more.</li>
+<li>Static analysis is triage, not a courtroom verdict. Context beats theatrics.</li>
+</ol>
+<h2>Current boundary</h2>
+<p>APK Sentinel remains an in-development, static-only analyzer. It does not install applications, execute them, contact extracted URLs, or claim to prove that an application is safe or malicious. The public material is intentionally limited to aggregate results, selected reports, and reproducible lessons rather than raw samples or operational artifacts.</p>
+<p>That is the useful version of the story: enough detail to show the work, not enough loose material to create a new problem.</p><footer><a href="/f-droid-corpus-review.md">Markdown source</a> · <a href="https://github.com/tmtz1/apk-sentinel">Documentation and evidence</a></footer></main></body></html>

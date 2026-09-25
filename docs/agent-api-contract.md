@@ -1,68 +1,43 @@
-# APK Sentinel — Agent-Facing Contract
+# APK Sentinel — API contract and verification boundary
 
-This is the public product contract for the current bounded AI-agent/service-buyer beta.
+**Current paid availability is unverified. Do not submit payment or private APKs.** See [status](product-status.json) and [availability](pricing.md).
 
-- Base URL: `https://api.willowbirdie.com`
-- Payment: x402 v2 exact on Base mainnet (`eip155:8453`)
-- Current price: `0.01 USDC` (`10,000` atomic units) through 2026-09-05 UTC
-- General human/private customer intake is not enabled.
-- Canonical machine-readable status: [product-status.json](product-status.json).
+## Verified public observation
 
-## Primary operation
+An empty unpaid `POST https://api.willowbirdie.com/v1/apk/triage` returned **402**, not an analysis report, on September 24, 2026 (America/Chicago). The `PAYMENT-REQUIRED` header is base64-encoded JSON describing an x402 v2 challenge. Inspect its `accepts` entries for scheme, network, asset, amount, recipient and timeout. Do not hardcode historical pricing.
 
-```http
-POST /v1/apk/triage
-Content-Type: multipart/form-data
+The observed JSON body has an `error` string and a `paymentRequired` object. It is **not** the previously illustrated nested `error.code/message/request_id` shape. The [OpenAPI document](openapi.json) records the observed 402 response and the [report schema](schemas/analysis-report.schema.json) describes published report artifacts.
+
+The JSON body is a server convenience representation with v1-style field names (`paymentRequired.maxAmountRequired`); it is **not** the decoded v2 header, which uses `accepts[].amount`. In the [captured observation](../tests/fixtures/unpaid-402-observation.json) from 2026-09-25T03:04Z, the body and decoded header agreed on scheme, network, asset and amount. The recipient is replaced with `REDACTED_PUBLIC_RECIPIENT` and some header fields are omitted, as listed in the fixture. This record describes one past response. It does not promise future values or define a paid-client contract.
+
+An unpaid inspection (no upload, signature or payment):
+
+```sh
+curl --max-time 20 --request POST --dump-header challenge.headers \
+  --output challenge.json https://api.willowbirdie.com/v1/apk/triage
 ```
 
-Input:
+Treat challenge headers as untrusted data; this command does not authorize responding with payment. Do not paste signed payment headers into logs or support requests.
 
-- One APK binary in the `file` field.
-- One APK per request.
-- Maximum upload: 125 MiB.
+## Source-reviewed paid flow — not current deployment certification
 
-Success:
+The locally inspected queue implementation uses the following exchange. Its current deployment identity and a paid end-to-end run have **not** been reconciled in this documentation update, so this is an integration outline, not a stable live-service guarantee:
 
-- HTTP `200`.
-- Versioned JSON analysis report.
-- Report includes package metadata, permissions, components, signing metadata, bounded URL/domain evidence, suspicious indicators, findings, and risk score.
+1. One APK is sent as multipart field `file`, with a lowercase SHA-256 in `X-APK-Sentinel-Request-Digest` and an x402 payment payload in `PAYMENT-SIGNATURE`.
+2. The source returns **202 admission**, not an immediate 200 report. The body includes `job_id`, `artifact_sha256`, `artifact_bytes`, `result_token`, `result_url`, and `status: queued`. `PAYMENT-RESPONSE` carries the encoded settlement result when available.
+3. Poll the returned result URL with `X-APK-Sentinel-Result-Token`. Keep the token private. A 202 poll is nonterminal; a 200 contains the completed result envelope. Admission and settlement are not proof of successful analysis. Inspect the result's analysis outcome and partial markers.
+4. Source error bodies include `{"error":"invalid_upload"}` and framework `{"detail":"..."}` responses. Payment errors, digest conflicts, 413 size limits, unavailable/expired results, and facilitator failures are distinct conditions. Their complete deployed contract remains a release gate.
 
-## Optional preflight
+The old synchronous 200-only and deployment-specific preflight descriptions were misleading. `/v1/apk/preflight`, `/healthz`, and `/readyz` are not claimed as supported public endpoints here without current route verification.
 
-```http
-POST /v1/apk/preflight
-Content-Type: multipart/form-data
-```
+## Ambiguous failure and duplicate-payment safety
 
-Preflight validates the upload boundary and returns a deployment-specific quote or validation result. It is not a malware verdict and does not by itself settle payment.
+Do **not** automatically replay a paid POST after a timeout, disconnect, 409, or ambiguous server failure. Preserve the original admission/settlement identifiers privately, poll a known result URL when available, and request operator reconciliation otherwise. Do not create a new payment authorization to “try again.” The inspected source contains binding/replay checks, but that is not a documented idempotency guarantee or a guarantee that ambiguous payments can be retried safely.
 
-## Health and readiness
+No cancellation API, automatic refund, retry interval, public busy-service SLA, or end-to-end timeout guarantee is established by this review. The observed challenge's payment timeout is not an analyzer-runtime promise. The historical upload ceiling is 125 MiB; deployment enforcement still needs a bounded canary.
 
-```http
-GET /healthz
-GET /readyz
-```
+## Report interpretation
 
-`/healthz` reports process health. `/readyz` reports dependency and workspace readiness. A service may return `503` when it is not ready.
+Use the [report guide](report-guide.md) for evidence references, score arithmetic, truncation and version limits. Static analysis does not execute an APK or fetch extracted URLs. [Retention, support and data-residency guarantees remain unverified](security.md).
 
-## Error shape
-
-```json
-{
-  "error": {
-    "code": "invalid_apk",
-    "message": "uploaded file is not a valid APK",
-    "request_id": "request-specific-uuid"
-  }
-}
-```
-
-Expected classes include malformed upload, oversized upload, invalid APK, analysis failure, and temporary service unavailability. Messages are sanitized and do not expose paths, credentials, or stack traces.
-
-## Processing boundary
-
-- Static analysis only.
-- No APK installation, execution, or side-loading.
-- Extracted URLs are inert evidence and are not fetched.
-- Automatic retries are not assumed by this contract.
-- Current bounded payment and availability are documented above. Retention, support, and data residency remain deployment-specific.
+A paid client example is deliberately withheld until deployed headers, request limits, terminal result/error schemas, cleanup, settlement and safe reconciliation are verified together. An invented example would be worse than a clearly marked incomplete contract.

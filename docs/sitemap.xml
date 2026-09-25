@@ -1,16 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url><loc>https://apk-sentinel.willowbirdie.com/</loc></url>
-  <url><loc>https://apk-sentinel.willowbirdie.com/agent-product.md</loc></url>
-  <url><loc>https://apk-sentinel.willowbirdie.com/agent-api-contract.md</loc></url>
-  <url><loc>https://apk-sentinel.willowbirdie.com/openapi.json</loc></url>
-  <url><loc>https://apk-sentinel.willowbirdie.com/about.md</loc></url>
-  <url><loc>https://apk-sentinel.willowbirdie.com/pricing.md</loc></url>
-  <url><loc>https://apk-sentinel.willowbirdie.com/contact.md</loc></url>
   <url><loc>https://apk-sentinel.willowbirdie.com/about/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/agent-api-contract/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/agent-product/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/apk-sentinel/</loc></url>
   <url><loc>https://apk-sentinel.willowbirdie.com/contact/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/f-droid-corpus-review/</loc></url>
   <url><loc>https://apk-sentinel.willowbirdie.com/pricing/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/real-world-hard-cases/</loc></url>
+  <url><loc>https://apk-sentinel.willowbirdie.com/report-guide/</loc></url>
   <url><loc>https://apk-sentinel.willowbirdie.com/security/</loc></url>
-  <url><loc>https://apk-sentinel.willowbirdie.com/.well-known/security.txt</loc></url>
-  <url><loc>https://apk-sentinel.willowbirdie.com/llms.txt</loc></url>
 </urlset>

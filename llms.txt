@@ -4,10 +4,15 @@
 
 ## Availability
 
-Limited beta for AI agents and service buyers. The documented endpoint is callable for bounded testing through x402 v2 exact payment on Base mainnet (`eip155:8453`) at `0.01 USDC` (`10,000` atomic units) through 2026-09-05 UTC. This is API access, not a browser upload portal. General human/private customer intake and support are not enabled.
+<!-- AVAILABILITY:START -->
+Availability: unverified. The published beta terms expired. An unpaid challenge is observable, but paid analysis, current terms and worker readiness have not been reverified. Do not submit payment or private APKs until current terms are confirmed. Browser upload: not enabled. General customer intake: not enabled. Customer support: not enabled.
 
-Canonical status: https://github.com/tmtz1/apk-sentinel/blob/main/product-status.json
-Endpoint: https://api.willowbirdie.com/v1/apk/triage
+Canonical status: https://apk-sentinel.willowbirdie.com/product-status.json
+Availability explanation: https://apk-sentinel.willowbirdie.com/pricing/
+Documented endpoint: https://api.willowbirdie.com/v1/apk/triage
+<!-- AVAILABILITY:END -->
+
+An unpaid HTTP 402 observation does not prove paid analysis or renew pricing.
 
 ## Product
 
@@ -39,7 +44,3 @@ APK Sentinel accepts one Android APK and produces a structured triage report for
 - API contract: https://github.com/tmtz1/apk-sentinel/blob/main/docs/agent-api-contract.md
 - Synthetic report: https://github.com/tmtz1/apk-sentinel/blob/main/examples/apk-sentinel-sanitized-report.json
 - Validation notes: https://github.com/tmtz1/apk-sentinel/blob/main/validation/apk-sentinel-validation.md
-
-## Availability
-
-Current bounded availability: `POST https://api.willowbirdie.com/v1/apk/triage` accepts one APK per request through x402 v2 exact payment on Base mainnet (`eip155:8453`) at `0.01 USDC` (`10,000` atomic units) through 2026-09-05 UTC. General human/private intake is closed; concurrency is `1`, automatic retries are disabled, and analysis is static-only. Do not treat this as a guarantee that an APK is safe or malicious.

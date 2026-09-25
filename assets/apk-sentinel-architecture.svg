@@ -21,5 +21,5 @@
   </g>
   <path d="M1070 430 C1070 470 1000 470 1000 520 H200 C150 520 125 485 125 450" fill="none" stroke="#fb7185" stroke-width="2" stroke-dasharray="7 6" marker-end="url(#arrow)"/>
   <text x="500" y="560" fill="#fda4af" font-family="system-ui,sans-serif" font-size="14" text-anchor="middle">cleanup on success, timeout, cancellation, or failure</text>
-  <text x="60" y="610" fill="#f4b860" font-family="system-ui,sans-serif" font-size="14">PUBLIC DESCRIPTION · DYNAMIC EXECUTION AND PUBLIC INGRESS REMAIN SEPARATELY GATED</text>
+  <text x="60" y="610" fill="#f4b860" font-family="system-ui,sans-serif" font-size="14">DESIGN BOUNDARY · NO BROWSER INTAKE · API AVAILABILITY: SEE PRODUCT STATUS</text>
 </svg>

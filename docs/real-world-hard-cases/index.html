@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Real-world hard cases: where APK Sentinel had to grow up</title><link rel="canonical" href="https://apk-sentinel.willowbirdie.com/real-world-hard-cases/"><style>body{margin:0;background:#101419;color:#e8edf2;font:17px/1.65 system-ui,sans-serif}main{max-width:900px;margin:auto;padding:32px 20px 64px}a{color:#77d6a3;overflow-wrap:anywhere}nav{display:flex;flex-wrap:wrap;gap:16px;border-bottom:1px solid #52606d;padding-bottom:16px}h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.2}pre{overflow:auto;padding:16px;background:#171d24}code{overflow-wrap:anywhere}aside{border-left:4px solid #e8c46c;padding:12px 18px;background:#171d24;margin:24px 0}table{display:block;overflow:auto;border-collapse:collapse}td,th{padding:8px;border:1px solid #52606d}img{max-width:100%;height:auto}footer{margin-top:40px;border-top:1px solid #52606d;padding-top:16px}</style></head>
+<body><main><nav aria-label="Main"><a href="/">Home</a><a href="/about/">About</a><a href="/pricing/">Availability</a><a href="/agent-api-contract/">API contract</a><a href="/report-guide/">Report guide</a><a href="/contact/">Contact</a><a href="/security/">Security</a></nav><aside><strong>Availability: unverified.</strong> The published beta terms expired. An unpaid challenge is observable, but paid analysis, current terms and worker readiness have not been reverified. Do not submit payment or private APKs until current terms are confirmed. <a href="/product-status.json">Canonical status</a>.</aside><h1>Real-world hard cases: where APK Sentinel had to grow up</h1>
+<p>The Oxproxion example shows what a finished report looks like. This page shows the less glamorous part: what happened when real Android packages pushed the analyzer into corners its first design had not handled gracefully.</p>
+<p>The examples below are intentionally anonymized. They describe the engineering problem and the fix, not the private artifact trail.</p>
+<h2>Case 1 — The package that was safe to reject, but not safe to misunderstand</h2>
+<h3>What happened</h3>
+<p>A legitimate F-Droid package arrived just above the original input ceiling. The analyzer rejected it before the static analysis phase began.</p>
+<p>That first behavior was technically bounded, but the result was too easy to misread. It did not mean the application was suspicious. It meant the workload was outside the analyzer's current admission policy.</p>
+<h3>What we changed</h3>
+<p>We raised the input ceiling only within the existing temporary-storage boundary. The analyzer still refuses oversized inputs rather than allowing an unbounded upload to dictate resource use.</p>
+<p>We added boundary tests for:</p>
+<ul>
+<li>just-below-limit input;</li>
+<li>exactly-at-limit input;</li>
+<li>just-over-limit input;</li>
+<li>cleanup after each decision.</li>
+</ul>
+<h3>What we learned</h3>
+<p>Admission policy and security verdict are different things. A package can be a perfectly ordinary application and still be unsupported by a particular analysis budget.</p>
+<p>The public-facing lesson is simple: “unsupported at this limit” is a workload result, not a malware label.</p>
+<h2>Case 2 — The scan that hit its fence and took the whole report down with it</h2>
+<h3>What happened</h3>
+<p>Several larger packages contained enough DEX content and URL-like material to reach the analyzer's bounded evidence-scan budget. The analyzer stopped protecting the scan budget by rejecting the entire package.</p>
+<p>That was the wrong level of failure. The limit was doing its job. The reporting policy was not.</p>
+<h3>What we changed</h3>
+<p>The scanner now:</p>
+<ul>
+<li>stops at the configured budget;</li>
+<li>keeps the evidence found before the cutoff;</li>
+<li>marks the affected section as truncated;</li>
+<li>preserves a sanitized, structured result;</li>
+<li>avoids pretending that the scan was complete.</li>
+</ul>
+<p>The same policy was applied to the related static-indicator scan after testing exposed that it had the older, harsher behavior.</p>
+<h3>What we learned</h3>
+<p>A bounded partial result is more honest and more useful than an all-or-nothing failure, provided the report makes the boundary visible. “Some evidence, scan stopped” is a real state. It deserves a real field in the schema.</p>
+<p>We added regression tests before changing the implementation. The tests cover both the cutoff itself and preservation of evidence collected before the cutoff.</p>
+<h2>Case 3 — The packages that exposed image-provenance drift</h2>
+<h3>What happened</h3>
+<p>The first rerun fixed the observed analyzer behavior, but not every affected sample had yet been rerun against the final rebuilt analyzer image. The results looked good, but mixing results from successive builds would have made the evidence weaker than it appeared.</p>
+<h3>What we changed</h3>
+<p>The affected samples were rerun as a single evidence lane against the final analyzer build. Successful reports had to pass schema validation and produce byte-identical results on the repeated run.</p>
+<p>The project record now treats the analyzer build as part of the evidence identity. A result without a clear build boundary is not discarded, but it is not quietly presented as if all samples used the same implementation.</p>
+<h3>What we learned</h3>
+<p>Reproducibility is not just “run it twice.” It is “run the same input twice under the same relevant implementation and rules.” Paperwork is less exciting than code, but it catches expensive misunderstandings.</p>
+<h2>Case 4 — The clean failure that proved containment was working</h2>
+<h3>What happened</h3>
+<p>A later ten-sample corpus included packages that reached existing APK or DEX limits. Six ended in the bounded failure path rather than producing reports.</p>
+<p>That is not the headline anyone puts on a sales slide. It is still useful evidence.</p>
+<p>Each affected sample showed the same essential behavior on repeat:</p>
+<ul>
+<li>bounded non-success outcome;</li>
+<li>no report pretending to be complete;</li>
+<li>sanitized error handling;</li>
+<li>no unexplained output;</li>
+<li>cleanup completed;</li>
+<li>no leftover analyzer job or workspace.</li>
+</ul>
+<h3>What we learned</h3>
+<p>Fail-closed behavior is only valuable when it is deterministic and clean. A service that refuses a workload consistently, leaves no residue, and tells the caller enough to understand the disposition is behaving much better than one that guesses.</p>
+<p>The remaining work is also clear: add more malformed, corrupted, boundary-sized, and archive-abuse fixtures so the real-world corpus is not carrying the entire burden of parser coverage.</p>
+<h2>Case 5 — The concurrency test that stayed out of production settings</h2>
+<h3>What happened</h3>
+<p>The normal analyzer lane is intentionally conservative. We wanted to test simultaneous jobs without quietly changing the production concurrency setting and creating a new failure mode.</p>
+<h3>What we changed</h3>
+<p>A separate test-only lane ran simultaneous pairs with independent workspaces and output attribution. The normal one-job setting was left alone.</p>
+<p>The check looked for:</p>
+<ul>
+<li>cross-job output mix-ups;</li>
+<li>stale workspace reuse;</li>
+<li>surviving analyzer jobs;</li>
+<li>leftover temporary data;</li>
+<li>incorrect cleanup attribution.</li>
+</ul>
+<p>No cross-job attribution problem was observed in that pass.</p>
+<h3>What we learned</h3>
+<p>Concurrency testing should be isolated from production policy. Otherwise the test becomes the change, and nobody notices until the first real customer arrives with a second request.</p>
+<h2>What these cases add to the showcase</h2>
+<p>The Oxproxion report demonstrates a readable real-world result. These cases demonstrate the engineering discipline behind the result:</p>
+<ul>
+<li>limits are explicit;</li>
+<li>unsupported workloads are not mislabeled as malicious;</li>
+<li>partial evidence is declared rather than hidden;</li>
+<li>build provenance is respected;</li>
+<li>failures are deterministic;</li>
+<li>cleanup is part of correctness;</li>
+<li>concurrency is tested without casually widening the production blast radius.</li>
+</ul>
+<p>That is the part worth showing. Not because the analyzer never had a bad day, but because the bad days left a paper trail and became tests instead of folklore.</p>
+<h2>Current boundary</h2>
+<p>APK Sentinel remains static-only. It does not install or execute applications, fetch extracted URLs, or claim to prove that an application is safe or malicious. This page contains engineering summaries only; it does not publish APK files, raw reports, private manifests, internal paths, infrastructure identifiers, or operational credentials.</p><footer><a href="/real-world-hard-cases.md">Markdown source</a> · <a href="https://github.com/tmtz1/apk-sentinel">Documentation and evidence</a></footer></main></body></html>

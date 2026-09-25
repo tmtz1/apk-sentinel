@@ -55,6 +55,21 @@ The later ten-sample round was designed to provide a different kind of pressure:
 
 Result: 4 report-producing samples and 6 deterministic bounded failures. These were expected limit outcomes, not silent crashes or inconsistent results. The test-only simultaneous pairs also kept their outputs separated and left no workspaces or analyzer jobs behind.
 
+## Coverage is separate from containment
+
+This selected corpus is nonrepresentative and is not a detection-accuracy benchmark.
+
+| Later-round measure | Published evidence |
+|---|---|
+| Report production | 4 of 10 samples |
+| Bounded no-report outcomes | 6 of 10 samples |
+| Partial reports | Count not recorded in the public packet |
+| Repeatability | Reports described as byte-identical; bounded outcomes described as matching |
+| Cleanup/isolation | Reported in historical runs; not re-exercised by documentation CI |
+| Unsupported vs malformed | Per-sample classification and specific limit values not published; unknown |
+
+The six no-report samples above reached APK/DEX bounds according to the original notes. More specific reason categories or limits cannot responsibly be reconstructed from aggregate prose. Recover sanitized run receipts before claiming a particular sample was malformed or supported. The next useful improvement is more report-producing coverage within the same resource boundary, not redefining bounded rejection as useful analysis.
+
 ## What stayed the same
 
 Across both rounds, the useful safety properties held:
