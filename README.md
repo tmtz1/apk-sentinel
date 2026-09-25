@@ -6,7 +6,9 @@ APK Sentinel is a deterministic, automation-friendly API for evidence-backed sta
 
 The intended workflow is bounded and deterministic: validate one APK, analyze it statically inside a restricted job boundary, return a versioned JSON report, and clean up temporary artifacts.
 
-**Availability: unverified; published beta terms expired.** The endpoint responds to an unpaid probe, but paid analysis and renewed terms have not been reverified. Do not submit payment or private APKs. See the [canonical status](product-status.json) and [availability explanation](docs/pricing.md).
+<!-- AVAILABILITY:START -->
+**Availability: unverified.** The published beta terms expired. An unpaid challenge is observable, but paid analysis, current terms and worker readiness have not been reverified. Do not submit payment or private APKs until current terms are confirmed. Browser upload: not enabled. General customer intake: not enabled. Customer support: not enabled. See the [canonical status](product-status.json) and [availability explanation](docs/pricing.md). Documented endpoint: `https://api.willowbirdie.com/v1/apk/triage`.
+<!-- AVAILABILITY:END -->
 
 ## Read a report first
 

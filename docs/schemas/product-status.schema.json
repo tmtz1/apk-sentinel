@@ -121,7 +121,8 @@
       ],
       "properties": {
         "checked_at": {
-          "type": "string"
+          "type": "string",
+          "format": "date-time"
         },
         "http_status": {
           "const": 402

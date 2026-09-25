@@ -46,6 +46,7 @@
         "$ref": "./schemas/analysis-report.schema.json"
       },
       "PaymentRequired": {
+        "description": "Observed unpaid 402 body: a server convenience representation with v1-style field names (maxAmountRequired). It is not the decoded x402 v2 PAYMENT-REQUIRED header (accepts[].amount) and does not define a paid-client contract.",
         "type": "object",
         "required": [
           "error",

@@ -8,6 +8,8 @@ An empty unpaid `POST https://api.willowbirdie.com/v1/apk/triage` returned **402
 
 The observed JSON body has an `error` string and a `paymentRequired` object. It is **not** the previously illustrated nested `error.code/message/request_id` shape. The [OpenAPI document](openapi.json) records the observed 402 response and the [report schema](schemas/analysis-report.schema.json) describes published report artifacts.
 
+The JSON body is a server convenience representation with v1-style field names (`paymentRequired.maxAmountRequired`); it is **not** the decoded v2 header, which uses `accepts[].amount`. In the [captured observation](../tests/fixtures/unpaid-402-observation.json) from 2026-09-25T03:04Z, the body and decoded header agreed on scheme, network, asset and amount. The recipient is replaced with `REDACTED_PUBLIC_RECIPIENT` and some header fields are omitted, as listed in the fixture. This record describes one past response. It does not promise future values or define a paid-client contract.
+
 An unpaid inspection (no upload, signature or payment):
 
 ```sh

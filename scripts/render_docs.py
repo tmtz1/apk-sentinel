@@ -12,6 +12,7 @@ ROOT = Path(__file__).resolve().parents[1]
 DOCS = ROOT / 'docs'
 SITE = 'https://apk-sentinel.willowbirdie.com'
 STYLE = '''body{margin:0;background:#101419;color:#e8edf2;font:17px/1.65 system-ui,sans-serif}main{max-width:900px;margin:auto;padding:32px 20px 64px}a{color:#77d6a3;overflow-wrap:anywhere}nav{display:flex;flex-wrap:wrap;gap:16px;border-bottom:1px solid #52606d;padding-bottom:16px}h1{font-size:clamp(1.8rem,5vw,3rem);line-height:1.2}pre{overflow:auto;padding:16px;background:#171d24}code{overflow-wrap:anywhere}aside{border-left:4px solid #e8c46c;padding:12px 18px;background:#171d24;margin:24px 0}table{display:block;overflow:auto;border-collapse:collapse}td,th{padding:8px;border:1px solid #52606d}img{max-width:100%;height:auto}footer{margin-top:40px;border-top:1px solid #52606d;padding-top:16px}'''
+SUMMARIES = {'README.md': ('product-status.json', 'docs/pricing.md'), 'llms.txt': None, 'docs/llms.txt': None}
 NAV = '<nav aria-label="Main"><a href="/">Home</a><a href="/about/">About</a><a href="/pricing/">Availability</a><a href="/agent-api-contract/">API contract</a><a href="/report-guide/">Report guide</a><a href="/contact/">Contact</a><a href="/security/">Security</a></nav>'
 
 
@@ -32,10 +33,32 @@ def link_target(match):
     return 'href="' + urlunsplit(('', '', path, parsed.query, parsed.fragment)) + '"'
 
 
+def availability_summary(status, name):
+    payment = status['payment']
+    label = 'Availability: ' + status['status'] + '.'
+    text = status['availability_note']
+    if status['status'] == 'limited-beta':
+        text += f" Current terms: `{payment['price_usdc']} USDC` (`{payment['atomic_amount']}` atomic units) via {payment['mechanism']} on {payment['network']} (`{payment['network_id']}`) through {payment['test_ends']}."
+    enabled = {'Browser upload': status['browser_upload'], 'General customer intake': status['general_customer_intake'], 'Customer support': status['customer_support']}
+    text += ' ' + ' '.join(k + (': enabled.' if v else ': not enabled.') for k, v in enabled.items())
+    if SUMMARIES[name]:
+        status_link, pricing_link = SUMMARIES[name]
+        return f"**{label}** {text} See the [canonical status]({status_link}) and [availability explanation]({pricing_link}). Documented endpoint: `{status['endpoint']}`."
+    return label + ' ' + text + f"\n\nCanonical status: {SITE}/product-status.json\nAvailability explanation: {SITE}/pricing/\nDocumented endpoint: {status['endpoint']}"
+
+
+def render_availability(text, status, name):
+    pattern = r'<!-- AVAILABILITY:START -->\n.*?\n<!-- AVAILABILITY:END -->'
+    if len(re.findall(pattern, text, flags=re.S)) != 1:
+        raise ValueError(name + ' needs exactly one generated availability block')
+    block = '<!-- AVAILABILITY:START -->\n' + availability_summary(status, name) + '\n<!-- AVAILABILITY:END -->'
+    return re.sub(pattern, lambda _: block, text, flags=re.S)
+
+
 def artifacts():
     status = json.loads((ROOT / 'product-status.json').read_text())
     banner = '<aside><strong>Availability: ' + escape(status['status']) + '.</strong> ' + escape(status['availability_note']) + ' <a href="/product-status.json">Canonical status</a>.</aside>'
-    output = {}
+    output = {ROOT / name: render_availability((ROOT / name).read_text(), status, name) for name in SUMMARIES}
     for source in sorted(DOCS.glob('*.md')):
         text = source.read_text()
         title = text.splitlines()[0].lstrip('# ')
@@ -66,7 +89,7 @@ def main():
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(content)
     if stale:
-        raise SystemExit('Regenerate stale HTML: ' + ', '.join(stale))
+        raise SystemExit('Regenerate stale generated files: ' + ', '.join(stale))
     print('Rendered documentation: ' + ('current' if args.check else 'generated'))
 
 
