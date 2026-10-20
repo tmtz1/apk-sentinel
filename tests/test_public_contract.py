@@ -1,11 +1,28 @@
 import copy
-from datetime import datetime, timezone
+from datetime import datetime, timedelta, timezone
 import importlib.util
 import json
 from pathlib import Path
 import unittest
 
 ROOT = Path(__file__).resolve().parents[1]
+
+
+def anchor(status):
+    """A clock just after the published record's own observations.
+
+    Status tests exercise validator logic using the real record as their base
+    fixture, so their clock only has to sit after whatever that record last
+    observed. Pinning it to a literal date instead made every one of them fail
+    the moment product-status.json was refreshed past that date.
+    """
+    observed = [status['reviewed_at'], status['observed_unpaid_challenge']['checked_at']]
+    latest = max(datetime.fromisoformat(value.replace('Z', '+00:00')) for value in observed)
+    return latest + timedelta(hours=12)
+
+
+def stamp(moment):
+    return moment.strftime('%Y-%m-%dT%H:%M:%SZ')
 
 
 class PublicContract(unittest.TestCase):
@@ -51,17 +68,24 @@ class PublicContract(unittest.TestCase):
     def test_active_claim_expires_and_has_bounded_freshness(self):
         v = self.validator()
         status = json.loads((ROOT / 'product-status.json').read_text())
+        now = anchor(status)
         status.update(status='limited-beta', endpoint_publicly_callable=True)
         status['payment'].update(enabled=True, terms_status='current')
-        now = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)
-        with self.assertRaises(ValueError):
+        # Each precondition is set explicitly rather than inherited from the
+        # record, so the assertions below do not shift when it is refreshed.
+        # Each step leaves exactly one rule able to fail, so a rule that stops
+        # being enforced fails this test instead of hiding behind another.
+        status['payment']['test_ends'] = stamp(now - timedelta(days=1))
+        status['last_verified'] = now.date().isoformat()
+        with self.assertRaises(ValueError):  # expired terms only
             v.validate_status(status, copy.deepcopy(status), now)
-        status['payment']['test_ends'] = '2026-10-01T00:00:00Z'
-        with self.assertRaises(ValueError):
+        status['payment']['test_ends'] = stamp(now + timedelta(days=6))
+        status['last_verified'] = (now - timedelta(days=30)).date().isoformat()
+        with self.assertRaises(ValueError):  # stale verification only
             v.validate_status(status, copy.deepcopy(status), now)
-        status['last_verified'] = '2026-09-25'
+        status['last_verified'] = now.date().isoformat()
         v.validate_status(status, copy.deepcopy(status), now)
-        status['last_verified'] = '2026-09-26'
+        status['last_verified'] = (now + timedelta(days=1)).date().isoformat()
         with self.assertRaises(ValueError):
             v.validate_status(status, copy.deepcopy(status), now)
 
@@ -70,7 +94,7 @@ class PublicContract(unittest.TestCase):
         status = json.loads((ROOT / 'product-status.json').read_text())
         status.update(status='paused', endpoint_publicly_callable=False)
         status['payment']['enabled'] = False
-        now = datetime(2026, 9, 25, 12, tzinfo=timezone.utc)
+        now = anchor(status)
         v.validate_status(status, copy.deepcopy(status), now)
         different = copy.deepcopy(status)
         different['status'] = 'unverified'
@@ -192,7 +216,7 @@ class StatusHardening(unittest.TestCase):
     def test_current_record_and_format_enforcement(self):
         v = load_script('validate_public')
         status = json.loads((ROOT / 'product-status.json').read_text())
-        now = datetime(2026, 9, 26, tzinfo=timezone.utc)
+        now = anchor(status)
         v.validate_status(status, copy.deepcopy(status), now)
         for field, value in [('reviewed_at', 'not-a-time'), ('last_verified', '2026-13-01')]:
             bad = copy.deepcopy(status)
@@ -206,10 +230,11 @@ class StatusHardening(unittest.TestCase):
 
     def test_future_observations_and_inactive_contradictions_rejected(self):
         v = load_script('validate_public')
-        now = datetime(2026, 9, 26, tzinfo=timezone.utc)
+        now = anchor(json.loads((ROOT / 'product-status.json').read_text()))
+        ahead = stamp(now + timedelta(days=1))
         for mutate in [
-            lambda s: s.update(reviewed_at='2026-09-27T00:00:00Z'),
-            lambda s: s['observed_unpaid_challenge'].update(checked_at='2026-09-27T00:00:00Z'),
+            lambda s: s.update(reviewed_at=ahead),
+            lambda s: s['observed_unpaid_challenge'].update(checked_at=ahead),
             lambda s: s['payment'].update(terms_status='current'),
         ]:
             bad = json.loads((ROOT / 'product-status.json').read_text())

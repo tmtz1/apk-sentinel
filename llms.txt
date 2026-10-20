@@ -5,7 +5,7 @@
 ## Availability
 
 <!-- AVAILABILITY:START -->
-Availability: unverified. The published beta terms expired. An unpaid challenge is observable, but paid analysis, current terms and worker readiness have not been reverified. Do not submit payment or private APKs until current terms are confirmed. Browser upload: not enabled. General customer intake: not enabled. Customer support: not enabled.
+Availability: expired. Worker readiness was reverified on 2026-10-20: the analysis pipeline completed a synthetic fixture end to end and cleaned up afterwards. Paid analysis is still not offered, because the published beta terms expired on 2026-09-05 and have not been replaced. An unpaid challenge remains observable. Do not submit payment or private APKs. Browser upload: not enabled. General customer intake: not enabled. Customer support: not enabled.
 
 Canonical status: https://apk-sentinel.willowbirdie.com/product-status.json
 Availability explanation: https://apk-sentinel.willowbirdie.com/pricing/
