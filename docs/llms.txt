@@ -5,7 +5,7 @@
 ## Availability
 
 <!-- AVAILABILITY:START -->
-Availability: expired. Worker readiness was reverified on 2026-10-20: the analysis pipeline completed a synthetic fixture end to end and cleaned up afterwards. Paid analysis is still not offered, because the published beta terms expired on 2026-09-05 and have not been replaced. An unpaid challenge remains observable. Do not submit payment or private APKs. Browser upload: not enabled. General customer intake: not enabled. Customer support: not enabled.
+Availability: paused. The analysis pipeline was restored and verified on 2026-11-11 with synthetic APK jobs, including after service restart; jobs completed and temporary artifacts were cleaned up. Paid intake is explicitly paused: an unpaid POST returns HTTP 503 without a payment challenge. Published beta terms remain expired. No live payment was exercised. Do not submit payment or private APKs. Browser upload: not enabled. General customer intake: not enabled. Customer support: not enabled.
 
 Canonical status: https://apk-sentinel.willowbirdie.com/product-status.json
 Availability explanation: https://apk-sentinel.willowbirdie.com/pricing/

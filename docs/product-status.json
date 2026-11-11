@@ -1,8 +1,8 @@
 {
   "schema_version": "1.1",
   "product": "APK Sentinel",
-  "status": "expired",
-  "endpoint_publicly_callable": true,
+  "status": "paused",
+  "endpoint_publicly_callable": false,
   "endpoint": "https://api.willowbirdie.com/v1/apk/triage",
   "browser_upload": false,
   "general_customer_intake": false,
@@ -17,15 +17,15 @@
     "test_ends": "2026-09-05T23:59:59Z",
     "terms_status": "expired"
   },
-  "last_verified": "2026-10-20",
-  "reviewed_at": "2026-10-20T20:23:43Z",
-  "availability_note": "Worker readiness was reverified on 2026-10-20: the analysis pipeline completed a synthetic fixture end to end and cleaned up afterwards. Paid analysis is still not offered, because the published beta terms expired on 2026-09-05 and have not been replaced. An unpaid challenge remains observable. Do not submit payment or private APKs.",
+  "last_verified": "2026-11-11",
+  "reviewed_at": "2026-11-11T15:38:19Z",
+  "availability_note": "The analysis pipeline was restored and verified on 2026-11-11 with synthetic APK jobs, including after service restart; jobs completed and temporary artifacts were cleaned up. Paid intake is explicitly paused: an unpaid POST returns HTTP 503 without a payment challenge. Published beta terms remain expired. No live payment was exercised. Do not submit payment or private APKs.",
   "observed_unpaid_challenge": {
     "checked_at": "2026-10-20T20:23:43Z",
     "http_status": 402,
     "network_id": "eip155:8453",
     "atomic_amount": "10000",
     "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-    "scope": "Unpaid empty POST only. Worker readiness was separately verified with a synthetic fixture, not through this endpoint; no upload, payment, settlement or customer intake was exercised."
+    "scope": "Historical unpaid empty POST observation only. It is not the current response: paid intake was explicitly paused on 2026-11-11 and now returns HTTP 503 without a payment challenge. No payment or settlement was exercised."
   }
 }
