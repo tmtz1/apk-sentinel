@@ -1,21 +1,26 @@
 # APK Sentinel availability and pricing
 
-**Analysis pipeline restored; paid intake explicitly paused.**
+**Limited paid API beta: 0.02 USDC per APK on Base mainnet.**
 
-The [canonical status record](product-status.json) is the maintained availability record. The pipeline verification date does not renew payment terms or imply a paid-service test.
+- Price: **0.02 USDC (20000 atomic units)** per APK, using x402 v2 exact and canonical Base USDC.
+- Beta starts: **2026-11-12T01:00:38Z**.
+- Beta ends: **2026-12-12T01:00:38Z**. New paid admission automatically closes at expiry. Renewal requires a new operator decision; this is not a subscription or automatic renewal.
+- Endpoint: `POST https://api.willowbirdie.com/v1/apk/triage`.
 
-## Verified November 11, 2026
+Read the [canonical status](product-status.json) and the live unsigned payment challenge before signing. The server can pause new admission if the analysis pipeline is unavailable. HTTP402 requests payment; HTTP202 means admission, not successful analysis. Never pay by an unsolicited direct transfer.
 
-Synthetic APK jobs completed through the production analysis pipeline, including after service restart, with matching artifact identity and successful cleanup. These were internal unpaid operational canaries, not customer uploads or settlement tests.
+## Scope and verification
 
-An empty unpaid `POST https://api.willowbirdie.com/v1/apk/triage` returns **HTTP 503 without a payment challenge**. Admission is blocked by the server. No payment was submitted or settled.
+This is a limited agent/API beta for APKs you are authorized to analyze. Browser uploads, confidential/private-data intake and unrestricted general-customer intake are not enabled. APKs are analyzed statically, not installed or executed. A risk score is not a guarantee that an APK is safe or malicious.
 
-## Historical challenge, not an offer
+The corrected API and queue are deployed. The synthetic production pipeline, cleanup and paused rollback were verified. At activation, public readiness and the unsigned challenge were checked for the advertised network and amount. No new paid transaction was submitted as part of this activation; these checks do not claim a new mainnet settlement test. Earlier isolated payment tests are historical evidence, not a promise of uptime or successful analysis.
 
-The previous HTTP 402 observation remains historical evidence. It advertised x402 v2 exact on Base mainnet and `0.01 USDC`; it is neither the current endpoint response nor renewed pricing. The published window ended September 5 UTC.
+## Failed or uncertain analysis
 
-## Before submitting anything
+For payment or analysis problems, contact [admin@willowbirdie.com](mailto:admin@willowbirdie.com). This address is monitored for the beta; no response-time SLA is promised. Provide the job ID and public transaction hash, if available. Do not send APKs, signed payment headers, result tokens, credentials or private keys.
 
-Do not send payment or private APKs until the operator publishes current terms and verifies the paid workflow. General customer intake, browser uploads, and customer support remain disabled. No new price, deadline, retention guarantee or support SLA is introduced here.
+Do not pay again or create a second authorization after a timeout or ambiguous failure. Poll an existing result when possible, then ask support to reconcile it. An abandoned job is a terminal failure, not a successful report. Refunds and no-charge retries are not automatic; verified cases require operator review and an explicitly approved remedy. This beta does not establish a guaranteed retention period or data-residency SLA; see [security and data handling](security.md).
 
-For integrations or pilot discussions, contact [admin@willowbirdie.com](mailto:admin@willowbirdie.com). Do not email APKs or secrets.
+## Historical terms
+
+The earlier 0.01-USDC offer and September5 expiry are historical and superseded by the current beta above. The previous commercial pause did not consume any of this beta's 30-day window.
