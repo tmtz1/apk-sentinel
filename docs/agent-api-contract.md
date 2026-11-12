@@ -1,8 +1,8 @@
 # APK Sentinel — API contract and verification boundary
 
-**Current paid availability is unverified. Do not submit payment or private APKs.** See [status](product-status.json) and [availability](pricing.md).
+**Limited paid API beta is enabled under the current published terms.** See [status](product-status.json) and [availability](pricing.md). Private/confidential samples remain outside the beta scope.
 
-## Verified public observation
+## Historical public observation
 
 An empty unpaid `POST https://api.willowbirdie.com/v1/apk/triage` returned **402**, not an analysis report, on September 24, 2026 (America/Chicago). The `PAYMENT-REQUIRED` header is base64-encoded JSON describing an x402 v2 challenge. Inspect its `accepts` entries for scheme, network, asset, amount, recipient and timeout. Do not hardcode historical pricing.
 
@@ -19,16 +19,16 @@ curl --max-time 20 --request POST --dump-header challenge.headers \
 
 Treat challenge headers as untrusted data; this command does not authorize responding with payment. Do not paste signed payment headers into logs or support requests.
 
-## Source-reviewed paid flow — not current deployment certification
+## Deployed paid flow and verification limits
 
-The locally inspected queue implementation uses the following exchange. Its current deployment identity and a paid end-to-end run have **not** been reconciled in this documentation update, so this is an integration outline, not a stable live-service guarantee:
+The corrected API and queue use the following exchange. Deployment, unpaid challenge and synthetic pipeline checks passed; no new paid mainnet transaction was performed at beta activation. Beta availability is not a guarantee of successful settlement or analysis:
 
 1. One APK is sent as multipart field `file`, with a lowercase SHA-256 in `X-APK-Sentinel-Request-Digest` and an x402 payment payload in `PAYMENT-SIGNATURE`.
 2. The source returns **202 admission**, not an immediate 200 report. The body includes `job_id`, `artifact_sha256`, `artifact_bytes`, `result_token`, `result_url`, and `status: queued`. `PAYMENT-RESPONSE` carries the encoded settlement result when available.
-3. Poll the returned result URL with `X-APK-Sentinel-Result-Token`. Keep the token private. A 202 poll is nonterminal; a 200 contains the completed result envelope. Admission and settlement are not proof of successful analysis. Inspect the result's analysis outcome and partial markers.
-4. Source error bodies include `{"error":"invalid_upload"}` and framework `{"detail":"..."}` responses. Payment errors, digest conflicts, 413 size limits, unavailable/expired results, and facilitator failures are distinct conditions. Their complete deployed contract remains a release gate.
+3. Poll the returned result URL with `X-APK-Sentinel-Result-Token`. Keep the token private. A 202 poll is nonterminal; a 200 contains a terminal result envelope, which can report `abandoned` with `error.code: lease_expired` rather than success. Admission and settlement are not proof of successful analysis. Inspect the result's analysis outcome and partial markers.
+4. Source error bodies include `{"error":"invalid_upload"}` and framework `{"detail":"..."}` responses. Payment errors, digest conflicts, 413 size limits, unavailable/expired results, and facilitator failures are distinct conditions. Clients must inspect the actual error and request support for ambiguous outcomes rather than automatically pay again.
 
-The old synchronous 200-only and deployment-specific preflight descriptions were misleading. `/v1/apk/preflight`, `/healthz`, and `/readyz` are not claimed as supported public endpoints here without current route verification.
+The old synchronous 200-only description was misleading. `/healthz` and `/readyz` were verified publicly at activation. `/v1/apk/preflight` is not established by this activation check.
 
 ## Ambiguous failure and duplicate-payment safety
 

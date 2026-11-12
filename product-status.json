@@ -1,31 +1,31 @@
 {
   "schema_version": "1.1",
   "product": "APK Sentinel",
-  "status": "paused",
-  "endpoint_publicly_callable": false,
+  "status": "limited-beta",
+  "endpoint_publicly_callable": true,
   "endpoint": "https://api.willowbirdie.com/v1/apk/triage",
   "browser_upload": false,
   "general_customer_intake": false,
-  "customer_support": false,
+  "customer_support": true,
   "payment": {
-    "enabled": false,
+    "enabled": true,
     "mechanism": "x402 v2 exact",
     "network": "Base mainnet",
     "network_id": "eip155:8453",
-    "price_usdc": "0.01",
-    "atomic_amount": "10000",
-    "test_ends": "2026-09-05T23:59:59Z",
-    "terms_status": "expired"
+    "price_usdc": "0.02",
+    "atomic_amount": "20000",
+    "test_ends": "2026-12-12T01:00:38Z",
+    "terms_status": "current"
   },
-  "last_verified": "2026-11-11",
-  "reviewed_at": "2026-11-11T15:38:19Z",
-  "availability_note": "The analysis pipeline was restored and verified on 2026-11-11 with synthetic APK jobs, including after service restart; jobs completed and temporary artifacts were cleaned up. Paid intake is explicitly paused: an unpaid POST returns HTTP 503 without a payment challenge. Published beta terms remain expired. No live payment was exercised. Do not submit payment or private APKs.",
+  "last_verified": "2026-11-12",
+  "reviewed_at": "2026-11-12T01:01:07Z",
+  "availability_note": "Limited paid agent/API beta activated 2026-11-12T01:00:38Z at 0.02 USDC per APK on Base mainnet, ending 2026-12-12T01:00:38Z. Public readiness and the unsigned 402 challenge were verified; the deployed synthetic pipeline and rollback were verified separately. No new paid settlement was performed at activation. Monitored support: admin@willowbirdie.com. Browser uploads and confidential/private-data intake are not enabled.",
   "observed_unpaid_challenge": {
-    "checked_at": "2026-10-20T20:23:43Z",
+    "checked_at": "2026-11-12T01:01:07Z",
     "http_status": 402,
     "network_id": "eip155:8453",
-    "atomic_amount": "10000",
+    "atomic_amount": "20000",
     "asset": "0x833589fCD6eDb6E08f4c7C32D4f71b54bdA02913",
-    "scope": "Historical unpaid empty POST observation only. It is not the current response: paid intake was explicitly paused on 2026-11-11 and now returns HTTP 503 without a payment challenge. No payment or settlement was exercised."
+    "scope": "Current empty unpaid POST only: network, amount, canonical asset and approved recipient matched. No payment signature, upload or settlement was submitted."
   }
 }

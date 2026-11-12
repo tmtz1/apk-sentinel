@@ -93,7 +93,7 @@ class PublicContract(unittest.TestCase):
         v = self.validator()
         status = json.loads((ROOT / 'product-status.json').read_text())
         status.update(status='paused', endpoint_publicly_callable=False)
-        status['payment']['enabled'] = False
+        status['payment'].update(enabled=False, terms_status='unverified')
         now = anchor(status)
         v.validate_status(status, copy.deepcopy(status), now)
         different = copy.deepcopy(status)
@@ -238,6 +238,9 @@ class StatusHardening(unittest.TestCase):
             lambda s: s['payment'].update(terms_status='current'),
         ]:
             bad = json.loads((ROOT / 'product-status.json').read_text())
+            # This is an inactive fixture even when the real product is live.
+            bad.update(status='paused', endpoint_publicly_callable=False)
+            bad['payment'].update(enabled=False, terms_status='unverified')
             mutate(bad)
             with self.assertRaises(ValueError):
                 v.validate_status(bad, copy.deepcopy(bad), now)

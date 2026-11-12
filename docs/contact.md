@@ -1,9 +1,9 @@
 # Contact APK Sentinel
 
-For pilot questions, integration discussions, or agent-marketplace availability, contact:
+For beta payment issues, failed analyses, integrations or pilot questions:
 
 [admin@willowbirdie.com](mailto:admin@willowbirdie.com?subject=APK%20Sentinel)
 
-Include the workflow the report must support, approximate sample volume, and whether the request concerns a public test fixture or an authorized customer environment.
+This address is monitored for the limited paid beta. No response-time SLA is promised. For a payment/analysis issue, provide the job ID and public transaction hash when available. Do not pay again after an ambiguous failure; request reconciliation first. See [current terms and failure handling](pricing.md).
 
-Do not send APKs, credentials, private keys, tokens, or sensitive customer data by email. Use only environments and samples you are authorized to test.
+Do not email APKs, signed payment headers, result tokens, credentials, private keys or sensitive customer data. Submit only samples you are authorized to analyze within the published beta scope.
